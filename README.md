@@ -1,7 +1,5 @@
 # Link zum Mokup
 
-https://www.figma.com/file/mThQsf7feLP3kzpWoK2CjJ/Media-Library?node-id=0%3A1
-
 https://www.figma.com/file/sTQNNqM1lR0NU7biyafDgN/Video-Archive-Frontend?node-id=0%3A1&t=ia6Ng1YyYltf8RVz-1
 
 # Test

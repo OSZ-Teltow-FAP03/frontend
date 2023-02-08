@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ArchiveComponent } from './archive/archive.component';
+import { ArchivePageComponent } from './archive-page/archive-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,11 +16,12 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterComponent } from './login-page/register/register.component';
 import { SendPasswordResetComponent } from './login-page/send-password-reset/send-password-reset.component';
 import { LoginComponent } from './login-page/login/login.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ArchiveComponent,
+    ArchivePageComponent,
     GenericErrorComponent,
     NotFoundComponent,
     LoginComponent,
@@ -37,6 +38,7 @@ import { LoginComponent } from './login-page/login/login.component';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

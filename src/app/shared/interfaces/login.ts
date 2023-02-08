@@ -5,4 +5,6 @@ export interface loginData {
 
 export interface registerData extends loginData {
   email: string;
+  foreName: string;
+  lastName: string;
 }

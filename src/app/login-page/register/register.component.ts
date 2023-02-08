@@ -21,6 +21,8 @@ export class RegisterComponent {
 
   registerForm = this.nfb.group({
     username: this.nfb.control<string>('', [Validators.required]),
+    foreName: this.nfb.control<string>('', [Validators.required]),
+    lastName: this.nfb.control<string>('', [Validators.required]),
     password: this.nfb.control<string>('', [
       Validators.required,
       matchValidator('confirmPassword', true),

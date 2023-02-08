@@ -1,0 +1,102 @@
+<div class="content" [ngSwitch]="page">
+  <div *ngSwitchCase="'Login'" class="login">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1 class="title"><b>Login</b></h1>
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" formControlName="username" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          type="password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="loginForm.controls.username.invalid">{{
+          getErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
+      <div class="password-forgotten">
+        <button
+          type="button"
+          color="primary"
+          mat-button
+          (click)="page = 'Password-Reset'"
+        >
+          Passwort vergessen?
+        </button>
+      </div>
+      <div class="action-buttons">
+        <button
+          type="submit"
+          color="primary"
+          mat-raised-button
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
+      </div>
+      <p>
+        Du hast noch keinen Account?
+        <button
+          type="button"
+          color="primary"
+          mat-button
+          (click)="page = 'Register'"
+        >
+          Dann erstellen Sie jetzt einen.
+        </button>
+      </p>
+    </form>
+  </div>
+  <div *ngSwitchCase="'Register'" class="register">
+    <h1 class="title"><b>Username</b></h1>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Password" type="password" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" type="email" />
+    </mat-form-field>
+    <div class="action-buttons">
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        (click)="page = 'Login'"
+      >
+        Zurück
+      </button>
+      <button type="button" color="primary" mat-raised-button>
+        Registrieren
+      </button>
+    </div>
+  </div>
+  <div *ngSwitchCase="'Password-Reset'" class="reset">
+    <h1 class="title"><b>Password Zurücksetzen</b></h1>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Geben sie ihre Email ein." type="email" />
+    </mat-form-field>
+    <div class="action-buttons">
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        (click)="page = 'Login'"
+      >
+        Zurück
+      </button>
+      <button type="button" color="primary" mat-raised-button>
+        Zurücksetzen
+      </button>
+    </div>
+  </div>
+</div>

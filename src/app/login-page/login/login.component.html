@@ -8,8 +8,11 @@
   ">
   <h1 class="title"><b>Login</b></h1>
   <mat-form-field appearance="fill">
-    <mat-label>Username</mat-label>
-    <input matInput placeholder="Username" formControlName="username" />
+    <mat-label>Email oder Username</mat-label>
+    <input
+      matInput
+      placeholder="Email oder Username"
+      formControlName="username" />
     <mat-error *ngIf="loginForm.controls.username.invalid">{{
       getErrorMessage(loginForm.controls.username)
     }}</mat-error>

@@ -4,7 +4,9 @@
     register.emit({
       username: registerForm.controls.username.value,
       password: registerForm.controls.password.value,
-      email: registerForm.controls.email.value
+      email: registerForm.controls.email.value,
+      foreName: registerForm.controls.foreName.value,
+      lastName: registerForm.controls.lastName.value
     })
   ">
   <h1 class="title"><b>Neuen Account erstellen</b></h1>
@@ -15,6 +17,22 @@
       getErrorMessage(registerForm.controls.username)
     }}</mat-error>
   </mat-form-field>
+  <div class="name">
+    <mat-form-field appearance="fill">
+      <mat-label>Vorname</mat-label>
+      <input matInput placeholder="Vorname" formControlName="foreName" />
+      <mat-error *ngIf="registerForm.controls.foreName.invalid">{{
+        getErrorMessage(registerForm.controls.foreName)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nachname</mat-label>
+      <input matInput placeholder="Nachname" formControlName="lastName" />
+      <mat-error *ngIf="registerForm.controls.lastName.invalid">{{
+        getErrorMessage(registerForm.controls.lastName)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
   <mat-form-field appearance="fill">
     <mat-label>Passwort</mat-label>
     <input

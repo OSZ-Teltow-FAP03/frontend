@@ -1,0 +1,12 @@
+<div class="content">
+  <div class="round-svg">
+    <img [src]="imgPath" alt="" title="" />
+  </div>
+
+  <h1>"{{ mainMsg }}"</h1>
+  <p>"{{ secondMsg }}"</p>
+  <p class="small" *ngIf="showSmall">"(Puuuh jetzt hab ich Bauchschmerzen)"</p>
+  <button mat-raised-button color="primary" [routerLink]="'/'">
+    Zurück zur Hompepage
+  </button>
+</div>

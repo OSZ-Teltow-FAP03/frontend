@@ -1,0 +1,24 @@
+.content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-style: italic;
+  .small {
+    font-size: 0.8rem;
+  }
+  .round-svg {
+    margin-bottom: 1.5rem;
+    img {
+      display: block;
+      width: 300px;
+      height: 300px;
+
+      padding: 2rem;
+
+      border: 10px dotted #20214f;
+      border-radius: 50%;
+    }
+  }
+}

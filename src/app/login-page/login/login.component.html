@@ -1,0 +1,56 @@
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="
+    login.emit({
+      username: loginForm.controls.username.value,
+      password: loginForm.controls.password.value
+    })
+  ">
+  <h1 class="title"><b>Login</b></h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" formControlName="username" />
+    <mat-error *ngIf="loginForm.controls.username.invalid">{{
+      getErrorMessage(loginForm.controls.username)
+    }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      placeholder="Password"
+      type="password"
+      formControlName="password" />
+    <mat-error *ngIf="loginForm.controls.password.invalid">{{
+      getErrorMessage(loginForm.controls.password)
+    }}</mat-error>
+  </mat-form-field>
+  <div class="password-forgotten">
+    <button
+      type="button"
+      color="primary"
+      mat-button
+      (click)="changePage.emit('Password-Reset')">
+      Passwort vergessen?
+    </button>
+  </div>
+  <div class="action-buttons">
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="!loginForm.valid">
+      Login
+    </button>
+  </div>
+  <p>
+    Du hast noch keinen Account?
+    <button
+      type="button"
+      color="primary"
+      mat-button
+      (click)="changePage.emit('Register')">
+      Dann erstellen Sie jetzt einen.
+    </button>
+  </p>
+</form>

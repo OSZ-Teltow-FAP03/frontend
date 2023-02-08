@@ -1,0 +1,63 @@
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="
+    register.emit({
+      username: registerForm.controls.username.value,
+      password: registerForm.controls.password.value,
+      email: registerForm.controls.email.value
+    })
+  ">
+  <h1 class="title"><b>Neuen Account erstellen</b></h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" formControlName="username" />
+    <mat-error *ngIf="registerForm.controls.username.invalid">{{
+      getErrorMessage(registerForm.controls.username)
+    }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input
+      matInput
+      placeholder="Passwort"
+      type="password"
+      formControlName="password" />
+    <mat-error *ngIf="registerForm.controls.password.invalid">{{
+      getErrorMessage(registerForm.controls.password)
+    }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort erneut eingeben</mat-label>
+    <input
+      matInput
+      placeholder="Passwort erneut eingeben"
+      type="password"
+      formControlName="confirmPassword" />
+    <mat-error *ngIf="registerForm.controls.confirmPassword.invalid">{{
+      getErrorMessage(registerForm.controls.confirmPassword)
+    }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" type="email" formControlName="email" />
+    <mat-error *ngIf="registerForm.controls.email.invalid">{{
+      getErrorMessage(registerForm.controls.email)
+    }}</mat-error>
+  </mat-form-field>
+  <div class="action-buttons">
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      (click)="back.emit('Login')">
+      Zurück
+    </button>
+    <button
+      type="submit"
+      color="primary"
+      [disabled]="!registerForm.valid"
+      mat-raised-button>
+      Registrieren
+    </button>
+  </div>
+</form>

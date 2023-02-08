@@ -12,6 +12,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterComponent } from './login-page/register/register.component';
+import { SendPasswordResetComponent } from './login-page/send-password-reset/send-password-reset.component';
+import { LoginComponent } from './login-page/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,10 @@ import { MatButtonModule } from '@angular/material/button';
     ArchiveComponent,
     GenericErrorComponent,
     NotFoundComponent,
+    LoginComponent,
+    LoginPageComponent,
+    RegisterComponent,
+    SendPasswordResetComponent,
   ],
   imports: [
     BrowserModule,

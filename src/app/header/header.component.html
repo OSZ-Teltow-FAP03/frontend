@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/archive">Archiv</button>
+    <button mat-menu-item routerLink="/add-movie">Film hinzufügen</button>
+    <button mat-menu-item routerLink="/users">Userverwaltung</button>
+  </mat-menu>
+
+  <span>{{ title }}</span>
+  <span class="spacer"></span>
+  <form
+    [formGroup]="searchForm"
+    (ngSubmit)="search.emit(searchForm.controls.search.value)"
+    class="searchForm"
+    *ngIf="showSearch">
+    <mat-form-field
+      appearance="fill"
+      [hideRequiredMarker]="true"
+      subscriptSizing="dynamic">
+      <mat-label>Suche</mat-label>
+      <input
+        matInput
+        placeholder="Suchbegriff eingeben"
+        formControlName="search"
+    /></mat-form-field>
+    <button type="submit" mat-icon-button [disabled]="!searchForm.valid">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+</mat-toolbar>

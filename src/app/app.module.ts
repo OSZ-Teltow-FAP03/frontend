@@ -21,6 +21,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
+import { CustomPaginator } from './shared/components/pagination/custom-paginator';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
@@ -37,6 +43,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     RegisterComponent,
     SendPasswordResetComponent,
     MovieListComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +58,10 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatGridListModule,
     MatCardModule,
     LayoutModule,
+    MatPaginatorModule,
   ],
   providers: [
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() },
     { provide: LOCALE_ID, useValue: 'de-DE' },
   ],
   bootstrap: [AppComponent],

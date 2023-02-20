@@ -3,4 +3,9 @@
   <app-movie-list
     [movieList]="sanitizedMovieList$ | async"
     (openMovie)="openMovie($event)"></app-movie-list>
+  <app-pagination
+    [pageSize]="(pageSize$ | async) ?? 10"
+    [pageIndex]="(pageIndex$ | async) ?? 0"
+    [length]="(movieList$ | async)?.length ?? 0"
+    (paginator)="paginatorChange($event)"></app-pagination>
 </div>

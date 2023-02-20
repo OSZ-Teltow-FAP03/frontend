@@ -1,41 +1,46 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { NotFoundComponent } from './error/not-found/not-found.component';
-import { GenericErrorComponent } from './error/generic-error/generic-error.component';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ArchivePageComponent } from './archive-page/archive-page.component';
+
+// Angular Material Imports
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { RegisterComponent } from './login-page/register/register.component';
-import { SendPasswordResetComponent } from './login-page/send-password-reset/send-password-reset.component';
-import { LoginComponent } from './login-page/login/login.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { HeaderComponent } from './header/header.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
-import { PaginationComponent } from './shared/components/pagination/pagination.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
-import { CustomPaginator } from './shared/components/pagination/custom-paginator';
-import { MovieInfoDialogComponent } from './dialogs/movie-info-dialog/movie-info-dialog.component';
 
+// Localization imports
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+
+
+// Own Component imports
+import { HeaderComponent } from './header/header.component';
+import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { CustomPaginator } from './shared/components/pagination/custom-paginator';
+import { MovieInfoDialogComponent } from './dialogs/movie-info-dialog/movie-info-dialog.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterComponent } from './login-page/register/register.component';
+import { SendPasswordResetComponent } from './login-page/send-password-reset/send-password-reset.component';
+import { LoginComponent } from './login-page/login/login.component';
+import { ArchivePageComponent } from './archive-page/archive-page.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
+import { GenericErrorComponent } from './error/generic-error/generic-error.component';
 
 @NgModule({
   declarations: [

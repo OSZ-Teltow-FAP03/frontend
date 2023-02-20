@@ -22,11 +22,14 @@ import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
 import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
 import { CustomPaginator } from './shared/components/pagination/custom-paginator';
+import { MovieInfoDialogComponent } from './dialogs/movie-info-dialog/movie-info-dialog.component';
+
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
@@ -44,6 +47,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     SendPasswordResetComponent,
     MovieListComponent,
     PaginationComponent,
+    MovieInfoDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatCardModule,
     LayoutModule,
     MatPaginatorModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

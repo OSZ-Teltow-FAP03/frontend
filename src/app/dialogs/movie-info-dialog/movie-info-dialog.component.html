@@ -1,0 +1,74 @@
+<div class="content">
+  <div>
+    <div class="image-block">
+      <div
+        class="image"
+        (mouseover)="hover = true"
+        (mouseleave)="hover = false"
+        (click)="playMovie()">
+        <img
+          [src]="data.Vorschaubild"
+          [alt]="'Vorschaubild für den Film:' + data.Filmtitel"
+          title="Vorschaubild" />
+        <mat-icon (mouseenter)="hover = true" *ngIf="hover" class="play-symbol"
+          >play_circle</mat-icon
+        >
+      </div>
+      <span>{{ data.Dauer.hours }} Std. {{ data.Dauer.minutes }} Min.</span>
+    </div>
+    <div class="movie-info">
+      <h1>{{ data.Filmtitel }}</h1>
+      <p class="row">
+        <span>Beschreibung: </span><span>{{ data.Erzaehlsatz }}</span>
+      </p>
+      <p class="row">
+        <span>Erscheinungsdatum: </span
+        ><span>{{ data.Erscheinungsdatum | date : 'mediumDate' }}</span>
+      </p>
+      <p class="row">
+        <span>Autor: </span><span>{{ data.Autor }}</span>
+      </p>
+      <p class="row">
+        <span>Mitwirkende: </span><span>{{ data.Mitwirkende }}</span>
+      </p>
+      <p class="row">
+        <span>Klasse: </span><span>{{ data.Klasse }}</span>
+      </p>
+      <p class="row">
+        <span>Stichworte: </span><span>{{ data.Stichworte }}</span>
+      </p>
+      <button type="button" mat-button color="primary" (click)="moreInfo()">
+        Mehr Anzeigen ...
+      </button>
+    </div>
+    <div class="close">
+      <mat-icon (click)="dialogRef.close()">close</mat-icon>
+    </div>
+  </div>
+  <div>
+    <button type="button" mat-raised-button color="primary" (click)="edit()">
+      Editieren
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="download()">
+      Downloaden
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="playMovie()">
+      Film abspielen
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="playSound()">
+      Sound abspielen
+    </button>
+  </div>
+</div>

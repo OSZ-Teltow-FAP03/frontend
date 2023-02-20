@@ -1,4 +1,4 @@
-<p>archive works!</p>
+<app-header title="Filmarchiv" (search)="search($event)"></app-header>
 <div class="content">
   <app-movie-list
     [movieList]="sanitizedMovieList$ | async"

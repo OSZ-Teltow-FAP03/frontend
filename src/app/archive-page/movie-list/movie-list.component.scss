@@ -1,0 +1,50 @@
+mat-grid-list {
+  mat-grid-tile {
+    mat-card {
+      width: 90%;
+      height: 90%;
+      padding: 1.5rem;
+      &:hover {
+        cursor: pointer;
+        transition: box-shadow 0.3s;
+        box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+      }
+      mat-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      mat-card-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        padding: 0 1rem;
+        .noImage,
+        img {
+          height: 100%;
+          width: 100%;
+          max-width: 80%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: lightgrey;
+        }
+        .info {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 1rem;
+          > div {
+            display: flex;
+            flex-direction: column;
+            .info-title {
+              font-size: 0.7rem;
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+    }
+  }
+}

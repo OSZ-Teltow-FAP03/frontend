@@ -17,6 +17,10 @@ import { RegisterComponent } from './login-page/register/register.component';
 import { SendPasswordResetComponent } from './login-page/send-password-reset/send-password-reset.component';
 import { LoginComponent } from './login-page/login/login.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
@@ -32,6 +36,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     LoginPageComponent,
     RegisterComponent,
     SendPasswordResetComponent,
+    MovieListComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,9 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatButtonModule,
     ReactiveFormsModule,
     MatToolbarModule,
+    MatGridListModule,
+    MatCardModule,
+    LayoutModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de-DE' },

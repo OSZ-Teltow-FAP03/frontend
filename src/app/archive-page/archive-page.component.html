@@ -1,1 +1,6 @@
 <p>archive works!</p>
+<div class="content">
+  <app-movie-list
+    [movieList]="sanitizedMovieList$ | async"
+    (openMovie)="openMovie($event)"></app-movie-list>
+</div>

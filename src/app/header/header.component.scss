@@ -1,0 +1,13 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.searchForm {
+  display: flex;
+  align-items: center;
+  width: 25%;
+  max-width: 500px;
+  min-width: 350px;
+  mat-form-field {
+    width: 100%;
+  }
+}

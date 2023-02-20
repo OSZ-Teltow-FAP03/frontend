@@ -1,4 +1,4 @@
-import { loginData, registerData } from './../shared/interfaces/login';
+import { LoginData, RegisterData } from './../shared/interfaces/login';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LoginService } from '../shared/services/login.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class LoginPageComponent {
     this.page = 'Login';
   }
 
-  login(data: loginData) {
+  login(data: LoginData) {
     console.log(data);
     this.loginService.login(data.username, data.password).subscribe({
       next: bool => {
@@ -31,7 +31,7 @@ export class LoginPageComponent {
     });
   }
 
-  register(data: registerData) {
+  register(data: RegisterData) {
     console.log(data);
     this.loginService.register();
   }

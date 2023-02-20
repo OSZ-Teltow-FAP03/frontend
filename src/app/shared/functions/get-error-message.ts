@@ -1,6 +1,5 @@
 import { FormControl } from '@angular/forms';
 export function getErrorMessage(control: FormControl) {
-  console.log(control);
   if (control.hasError('required')) {
     return 'Bitte das Feld ausfüllen zum einloggen.';
   }

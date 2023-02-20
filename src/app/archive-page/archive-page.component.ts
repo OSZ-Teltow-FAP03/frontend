@@ -470,13 +470,11 @@ export class ArchivePageComponent {
               const sanitizedImg = sanitizer.bypassSecurityTrustUrl(
                 'data:image/png;base64,' + movie.Vorschaubild
               );
-              console.log(sanitizedImg);
               return { ...movie, Vorschaubild: sanitizedImg };
             }
             const sanitizedImg = sanitizer.bypassSecurityTrustUrl('');
             return { ...movie, Vorschaubild: sanitizedImg };
           });
-        console.log(sliceList);
         this.sanitizedMovieList$.next(sliceList);
       }
     );

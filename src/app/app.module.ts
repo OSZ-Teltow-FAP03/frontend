@@ -41,6 +41,8 @@ import { ArchivePageComponent } from './archive-page/archive-page.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { GenericErrorComponent } from './error/generic-error/generic-error.component';
 
+import { environment as env } from './../environments/environment';
+
 // Videogular imports
 import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
@@ -48,6 +50,8 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { VideoPlayerPageComponent } from './video-player-page/video-player-page.component';
 import { VideoPlayerComponent } from './video-player-page/video-player/video-player.component';
+import { API_TOKEN } from './shared/api-token';
+import { PROD_TOKEN } from './shared/production';
 
 @NgModule({
   declarations: [
@@ -90,6 +94,8 @@ import { VideoPlayerComponent } from './video-player-page/video-player/video-pla
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },
     { provide: LOCALE_ID, useValue: 'de-DE' },
+    { provide: API_TOKEN, useValue: env.apiURL },
+    { provide: PROD_TOKEN, useValue: env.production },
   ],
   bootstrap: [AppComponent],
 })

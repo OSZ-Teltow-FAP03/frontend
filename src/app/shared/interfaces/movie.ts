@@ -1,20 +1,19 @@
-import { Time } from '@angular/common';
 import { SafeUrl } from '@angular/platform-browser';
 
-export interface ApiMovieData {
+export interface BasicMovieData {
   ID: number;
   Filmtitel: string;
   Erscheinungsdatum: Date;
   Klasse: string;
-  Dauer: Time;
+  Dauer: string;
   Tonformat: Tonformat; // TODO: welche gibt es
   Bildformat: Bildformat; // TODO: welche gibt es
   Bildfrequenz: string;
   Farbtiefe: string;
   Videocontainer: string;
   Tonspurbelegung: string; //TODO: welche gibt es
-  Timecode_Anfang: Time;
-  Timecode_Ende: Time;
+  Timecode_Anfang: string;
+  Timecode_Ende: string;
   Videocodec: Videocodec; // TODO: welche gibt es
   Auflösung: string;
   Erstellungsdatum: Date;
@@ -28,36 +27,14 @@ export interface ApiMovieData {
   Status: Status; // TODO: welche gibt es
   Lehrjahr: string;
   Stichworte: string;
+  Prüfstück: boolean;
+}
+
+export interface ApiMovieData extends BasicMovieData {
   Vorschaubild: string; // Base64 string
 }
 
-export interface Movie {
-  ID: number;
-  Filmtitel: string;
-  Erscheinungsdatum: Date;
-  Klasse: string;
-  Dauer: Time;
-  Tonformat: Tonformat; // TODO: welche gibt es
-  Bildformat: Bildformat; // TODO: welche gibt es
-  Bildfrequenz: string;
-  Farbtiefe: string;
-  Videocontainer: string;
-  Tonspurbelegung: string; //TODO: welche gibt es
-  Timecode_Anfang: Time;
-  Timecode_Ende: Time;
-  Videocodec: Videocodec; // TODO: welche gibt es
-  Auflösung: string;
-  Erstellungsdatum: Date;
-  Autor: string;
-  Programmtyp: Programmtyp; // TODO: welche gibt es
-  Erzaehlsatz: string;
-  Bemerkung: string;
-  Mitwirkende: string;
-  Bewertungen: string;
-  Upload: Date;
-  Status: Status; // TODO: welche gibt es
-  Lehrjahr: string;
-  Stichworte: string;
+export interface Movie extends BasicMovieData {
   Vorschaubild: SafeUrl;
 }
 

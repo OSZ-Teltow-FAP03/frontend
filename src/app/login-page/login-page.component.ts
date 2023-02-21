@@ -1,7 +1,8 @@
-import { LoginData, RegisterData } from './../shared/interfaces/login';
+import { Login } from '../shared/interfaces/auth';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../shared/interfaces/user';
 
 @Component({
   selector: 'app-login-page',
@@ -19,7 +20,7 @@ export class LoginPageComponent {
     this.page = 'Login';
   }
 
-  login(data: LoginData) {
+  login(data: Login) {
     console.log(data);
     this.authService.login(data.username, data.password).subscribe({
       next: bool => {
@@ -31,7 +32,7 @@ export class LoginPageComponent {
     });
   }
 
-  register(data: RegisterData) {
+  register(data: User) {
     console.log(data);
     this.authService.register();
   }

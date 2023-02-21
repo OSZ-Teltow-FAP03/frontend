@@ -1,5 +1,5 @@
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginData } from './../../shared/interfaces/login';
+import { Login } from '../../shared/interfaces/auth';
 import { Component, Output, EventEmitter } from '@angular/core';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
 
@@ -9,7 +9,7 @@ import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  @Output() login = new EventEmitter<LoginData>();
+  @Output() login = new EventEmitter<Login>();
   @Output() changePage = new EventEmitter<string>();
 
   constructor(private readonly fb: FormBuilder) {}

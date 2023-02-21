@@ -27,7 +27,6 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
-
 // Own Component imports
 import { HeaderComponent } from './header/header.component';
 import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
@@ -41,6 +40,14 @@ import { LoginComponent } from './login-page/login/login.component';
 import { ArchivePageComponent } from './archive-page/archive-page.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { GenericErrorComponent } from './error/generic-error/generic-error.component';
+
+// Videogular imports
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { VideoPlayerPageComponent } from './video-player-page/video-player-page.component';
+import { VideoPlayerComponent } from './video-player-page/video-player/video-player.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +63,8 @@ import { GenericErrorComponent } from './error/generic-error/generic-error.compo
     MovieListComponent,
     PaginationComponent,
     MovieInfoDialogComponent,
+    VideoPlayerPageComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +82,10 @@ import { GenericErrorComponent } from './error/generic-error/generic-error.compo
     LayoutModule,
     MatPaginatorModule,
     MatDialogModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

@@ -3,8 +3,7 @@ form {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 25%;
-  min-width: 450px;
+  width: 100%;
   max-width: 750px;
   h1 {
     text-align: center;
@@ -26,5 +25,8 @@ form {
       margin: 0.5rem;
       padding: 0 1rem;
     }
+  }
+  .create-account {
+    text-align: center;
   }
 }

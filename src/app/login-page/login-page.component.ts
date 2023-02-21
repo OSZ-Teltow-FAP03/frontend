@@ -1,6 +1,6 @@
 import { LoginData, RegisterData } from './../shared/interfaces/login';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { LoginService } from '../shared/services/login.service';
+import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginPageComponent {
   page = 'Login' || 'Register' || 'Password-Reset';
 
   constructor(
-    private readonly loginService: LoginService,
+    private readonly authService: AuthService,
     private readonly router: Router
   ) {
     this.page = 'Login';
@@ -21,10 +21,10 @@ export class LoginPageComponent {
 
   login(data: LoginData) {
     console.log(data);
-    this.loginService.login(data.username, data.password).subscribe({
+    this.authService.login(data.username, data.password).subscribe({
       next: bool => {
         if (bool) {
-          this.loginService.loggedIn = true;
+          this.authService.loggedIn = true;
           this.router.navigate(['archive']);
         }
       },
@@ -33,11 +33,11 @@ export class LoginPageComponent {
 
   register(data: RegisterData) {
     console.log(data);
-    this.loginService.register();
+    this.authService.register();
   }
 
   sendEmail(emailAdress: string) {
     console.log(emailAdress);
-    this.loginService.sendEmail();
+    this.authService.sendEmail();
   }
 }

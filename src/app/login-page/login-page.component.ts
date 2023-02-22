@@ -22,23 +22,31 @@ export class LoginPageComponent {
 
   login(data: Login) {
     console.log(data);
-    this.authService.login(data.username, data.password).subscribe({
+    this.authService.login(data).subscribe({
       next: bool => {
         if (bool) {
-          this.authService.loggedIn = true;
           this.router.navigate(['archive']);
         }
       },
-    });
+    }); // TODO: success handling (notification)
   }
 
   register(data: User) {
-    console.log(data);
-    this.authService.register();
+    this.authService.register(data).subscribe({
+      next: user => {
+        console.log(user);
+        this.page = 'Login';
+      },
+    }); // TODO: success handling (notification)
   }
 
-  sendEmail(emailAdress: string) {
-    console.log(emailAdress);
-    this.authService.sendEmail();
+  sendEmail(email: string) {
+    this.authService.sendResetEmail(email).subscribe({
+      next: bool => {
+        if (bool) {
+          this.page = 'Login';
+        }
+      },
+    }); // TODO: success handling (notification)
   }
 }

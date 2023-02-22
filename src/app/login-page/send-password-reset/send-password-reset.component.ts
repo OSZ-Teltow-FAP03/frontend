@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
 
 @Component({
   selector: 'app-send-password-reset',
@@ -14,6 +15,8 @@ export class SendPasswordResetComponent {
   constructor(private readonly fb: FormBuilder) {}
 
   nfb = this.fb.nonNullable;
+
+  getErrorMessage = getErrorMessage;
 
   resetForm = this.nfb.group({
     email: this.nfb.control<string>('', [

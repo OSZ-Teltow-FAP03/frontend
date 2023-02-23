@@ -2,6 +2,7 @@ import { Login } from '../shared/interfaces/auth';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { RegisterUser } from '../shared/interfaces/user';
 
 @Component({
@@ -18,6 +19,11 @@ export class LoginPageComponent {
     private readonly router: Router
   ) {
     this.page = 'Login';
+    this.authService.loggedInBool.pipe(take(1)).subscribe(bool => {
+      if (bool) {
+        this.router.navigate(['archive']);
+      }
+    });
   }
 
   login(data: Login) {
@@ -26,6 +32,8 @@ export class LoginPageComponent {
       next: bool => {
         if (bool) {
           this.router.navigate(['archive']);
+        } else {
+          console.log('bla');
         }
       },
     }); // TODO: success handling (notification)

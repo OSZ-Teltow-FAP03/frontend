@@ -5,7 +5,7 @@
         class="image"
         (mouseover)="hover = true"
         (mouseleave)="hover = false"
-        (click)="playMovie()">
+        (click)="hasMovieFile ? playMovie() : null">
         <img
           [src]="data.Vorschaubild"
           [alt]="'Vorschaubild für den Film:' + data.Filmtitel"
@@ -49,13 +49,14 @@
     <button type="button" mat-raised-button color="primary" (click)="edit()">
       Editieren
     </button>
-    <button
+    <!-- <button
       type="button"
       mat-raised-button
       color="primary"
       (click)="download()">
       Downloaden
-    </button>
+    </button> -->
+    <ng-container *ngIf="hasMovieFile; else noMovieFile"></ng-container>
     <button
       type="button"
       mat-raised-button
@@ -63,12 +64,36 @@
       (click)="playMovie()">
       Film abspielen
     </button>
-    <button
-      type="button"
-      mat-raised-button
-      color="primary"
-      (click)="playSound()">
-      Sound abspielen
-    </button>
+    <ng-container *ngIf="hasSoundFile; else noSoundFile">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="playSound()">
+        Sound abspielen
+      </button>
+    </ng-container>
   </div>
 </div>
+
+<ng-template #noMovieFile>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    disabled
+    matTooltip="Keine Filmdatei vorhanden.">
+    Film abspielen
+  </button>
+</ng-template>
+
+<ng-template #noSoundFile>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    disabled
+    matTooltip="Keine Sounddatei vorhanden.">
+    Sound abspielen
+  </button>
+</ng-template>

@@ -1,8 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Movie } from '../interfaces/movie';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { API_TOKEN } from '../api-token';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { PROD_TOKEN } from '../production';
+import { File } from '../interfaces/file';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,7 @@ export class MovieService {
 
   constructor(
     @Inject(API_TOKEN) private readonly api: string,
+    @Inject(PROD_TOKEN) private readonly prod: boolean,
     private readonly http: HttpClient
   ) {}
 
@@ -25,12 +28,12 @@ export class MovieService {
     this.http.get<Array<Movie>>(`${this.filmsApi}/get`);
   }
   searchMovies(query: string) {
-    this.http.get<Movie>(`${this.filmsApi}/get`, {
+    return this.http.get<Movie>(`${this.filmsApi}/get`, {
       params: { filmQuery: query },
     });
   }
   createMovie(movie: Partial<Movie>) {
-    this.http.post<Movie>(`${this.filmsApi}/create`, {
+    return this.http.post<Movie>(`${this.filmsApi}/create`, {
       params: {
         Filmtitel: movie.Filmtitel, // encrypted string -- Required
         Status: movie.Status, // encrypted string -- Required
@@ -149,7 +152,7 @@ export class MovieService {
       params.set('Klasse', movie.Klasse);
     }
 
-    this.http.patch<Movie>(`${this.filmsApi}/update`, {
+    return this.http.patch<Movie>(`${this.filmsApi}/update`, {
       Upload: movie.Upload,
       Erstellungsdatum: movie.Erstellungsdatum,
       Erscheinungsdatum: movie.Erscheinungsdatum,
@@ -157,12 +160,17 @@ export class MovieService {
     });
   }
   deleteMovie(id: number) {
-    this.http.delete<Movie>(`${this.filmsApi}/delete`, {
+    return this.http.delete<Movie>(`${this.filmsApi}/delete`, {
       params: { FilmID: id },
     });
   }
   listFilesOfFilm(id: number) {
-    this.http.get<Movie>(`${this.filmsApi}/listFiles`, {
+    if (this.prod === false) {
+      return of<Array<File>>([
+        { type: 'Movie', path: 'https://vjs.zencdn.net/v/oceans.mp4' },
+      ]);
+    }
+    return this.http.get<Array<File>>(`${this.filmsApi}/listFiles`, {
       params: { FilmID: id },
     });
   }

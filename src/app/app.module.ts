@@ -24,6 +24,7 @@ import {
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Localization imports
 import { registerLocaleData } from '@angular/common';
@@ -103,9 +104,6 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     VgOverlayPlayModule,
     VgBufferingModule,
     HttpClientModule,
-    MatTableModule,
-    MatSortModule,
-    MatSelectModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

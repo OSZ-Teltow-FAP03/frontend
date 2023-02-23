@@ -54,6 +54,8 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { UserManagementPageComponent } from './user-management-page/user-management-page.component';
+import { UserTableComponent } from './user-management-page/user-table/user-table.component';
+import { UserFilterComponent } from './user-management-page/user-filter/user-filter.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { UserManagementPageComponent } from './user-management-page/user-managem
     VideoPlayerPageComponent,
     VideoPlayerComponent,
     UserManagementPageComponent,
+    UserTableComponent,
+    UserFilterComponent,
   ],
   imports: [
     BrowserModule,

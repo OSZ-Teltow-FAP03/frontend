@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  min-width: 150px;
+  width: 100%;
+  justify-content: center;
+}
+
+.parent-flex {
+  display: flex;
+  position: relative;
+  width: 50vw;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 25px auto;
+}
+
+.flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.flex-wrapper mat-form-field {
+  width: 100%;
+  margin: 10px 0;
+}
+.flex-wrapper mat-form-field:nth-child(1) {
+  margin-right: 5px;
+}
+.flex-wrapper mat-form-field:nth-child(2) {
+  margin-left: 5px;
+}
+
+.btn-row {
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+}
+.btn-row button:nth-child(1) {
+  margin-right: 5px;
+}
+.btn-row button:nth-child(2) {
+  margin-left: 5px;
+}
+
+.parent-flex mat-label {
+  margin: 10px auto;
+}
+.parent-flex #file-upload {
+  margin: 10px auto;
+}

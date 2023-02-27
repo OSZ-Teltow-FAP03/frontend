@@ -25,6 +25,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Localization imports
 import { registerLocaleData } from '@angular/common';
@@ -82,6 +84,7 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     UserActionsComponent,
     ConfirmationDialogComponent,
     RoleChangeDialogComponent,
+    VideoFormsComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +111,8 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     MatSortModule,
     MatSelectModule,
     MatTooltipModule,
+    DragDropModule,
+    MatCheckboxModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

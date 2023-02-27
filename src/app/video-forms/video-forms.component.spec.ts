@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenericErrorComponent } from './generic-error.component';
+import { VideoFormsComponent } from './video-forms.component';
 
-describe('GenericErrorComponent', () => {
-  let component: GenericErrorComponent;
-  let fixture: ComponentFixture<GenericErrorComponent>;
+describe('VideoFormsComponent', () => {
+  let component: VideoFormsComponent;
+  let fixture: ComponentFixture<VideoFormsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GenericErrorComponent],
+      declarations: [VideoFormsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GenericErrorComponent);
+    fixture = TestBed.createComponent(VideoFormsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

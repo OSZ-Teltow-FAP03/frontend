@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, of, tap } from 'rxjs';
+import { BehaviorSubject, of, tap, Observable } from 'rxjs';
+import { testUsers } from 'src/app/test-data/users';
 import { API_TOKEN } from '../api-token';
 import { Login } from '../interfaces/auth';
-import { User } from '../interfaces/user';
+import { RegisterUser, User } from '../interfaces/user';
 import { PROD_TOKEN } from '../production';
 
 @Injectable({
@@ -26,13 +27,6 @@ export class AuthService {
 
   login(login: Login) {
     if (this.prod === false) {
-      this.loggedInUser = {
-        name: 'Jochen',
-        lastname: 'Schweizer',
-        email: 'email@email.com',
-        password: login.password,
-        username: login.username,
-      };
       this.loggedInBool.next(true);
       return of(true);
     }
@@ -42,9 +36,16 @@ export class AuthService {
       })
     );
   }
-  register(user: User) {
+  register(user: RegisterUser): Observable<User> {
     if (this.prod === false) {
-      return of(user);
+      return of({
+        ID: 12,
+        name: user.name,
+        password: user.password,
+        lastname: user.lastname,
+        email: user.email,
+        username: user.username,
+      });
     }
     return this.http.post<User>(`${this.authApi}/register`, user);
   }

@@ -1,0 +1,56 @@
+<div class="filter">
+  <div class="buttons">
+    <ng-container *ngIf="selectedRow.size > 0; else noRow">
+      <ng-container *ngIf="selectedRow | keyvalue as rows">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="updateRole.emit(rows[0].value.array)">
+          Rolle ändern
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="delete.emit(rows[0].value.array)">
+          User löschen
+        </button>
+        <span>
+          Ausgewählter User: {{ rows[0].value.array.lastname }},
+          {{ rows[0].value.array.name }}
+        </span>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="search">
+    <form [formGroup]="searchForm">
+      <mat-form-field
+        appearance="fill"
+        color="primary"
+        subscriptSizing="dynamic">
+        <mat-label>Suche</mat-label>
+        <input
+          matInput
+          placeholder="Suchbegriff eingeben"
+          formControlName="search"
+          (keydown.enter)="search.emit(searchForm.controls.search.value)" />
+        <mat-icon
+          matSuffix
+          class="search-icon"
+          (click)="search.emit(searchForm.controls.search.value)"
+          >search</mat-icon
+        >
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<ng-template #noRow>
+  <button mat-raised-button color="primary" type="button" disabled>
+    Rolle ändern
+  </button>
+  <button mat-raised-button color="warn" type="button" disabled>
+    User löschen
+  </button>
+</ng-template>

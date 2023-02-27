@@ -2,7 +2,7 @@ import { Login } from '../shared/interfaces/auth';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../shared/interfaces/user';
+import { RegisterUser } from '../shared/interfaces/user';
 
 @Component({
   selector: 'app-login-page',
@@ -31,7 +31,7 @@ export class LoginPageComponent {
     }); // TODO: success handling (notification)
   }
 
-  register(data: User) {
+  register(data: RegisterUser) {
     this.authService.register(data).subscribe({
       next: user => {
         console.log(user);

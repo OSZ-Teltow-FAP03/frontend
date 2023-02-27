@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserFilterComponent } from './user-filter.component';
+import { UserFilterComponent } from './user-actions.component';
 
 describe('UserFilterComponent', () => {
   let component: UserFilterComponent;
@@ -8,9 +8,8 @@ describe('UserFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserFilterComponent ]
-    })
-    .compileComponents();
+      declarations: [UserFilterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserFilterComponent);
     component = fixture.componentInstance;

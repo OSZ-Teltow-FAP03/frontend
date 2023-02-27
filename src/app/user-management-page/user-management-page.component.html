@@ -1,3 +1,10 @@
 <app-header [showSearch]="false" title="User Management"></app-header>
-<app-user-filter></app-user-filter>
-<app-user-table></app-user-table>
+<app-user-actions
+  [selectedRow]="selectedRow"
+  (search)="search($event)"
+  (updateRole)="updateRole($event)"
+  (delete)="deleteUser($event)"></app-user-actions>
+<app-user-table
+  [dataSource]="dataSource"
+  (sort)="sortChange($event)"
+  (row)="rowChange($event)"></app-user-table>

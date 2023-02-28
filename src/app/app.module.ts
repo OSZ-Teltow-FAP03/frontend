@@ -21,6 +21,9 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 
 // Localization imports
 import { registerLocaleData } from '@angular/common';
@@ -29,10 +32,9 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 // Own Component imports
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { MovieListComponent } from './archive-page/movie-list/movie-list.component';
-import { PaginationComponent } from './shared/components/pagination/pagination.component';
-import { CustomPaginator } from './shared/components/pagination/custom-paginator';
+import { CustomPaginator } from './shared/functions/custom-paginator';
 import { MovieInfoDialogComponent } from './dialogs/movie-info-dialog/movie-info-dialog.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterComponent } from './login-page/register/register.component';
@@ -53,6 +55,11 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { UserManagementPageComponent } from './user-management-page/user-management-page.component';
+import { UserTableComponent } from './user-management-page/user-table/user-table.component';
+import { UserActionsComponent } from './user-management-page/user-actions/user-actions.component';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-change-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,10 +73,14 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     SendPasswordResetComponent,
     HeaderComponent,
     MovieListComponent,
-    PaginationComponent,
     MovieInfoDialogComponent,
     VideoPlayerPageComponent,
     VideoPlayerComponent,
+    UserManagementPageComponent,
+    UserTableComponent,
+    UserActionsComponent,
+    ConfirmationDialogComponent,
+    RoleChangeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +103,9 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     VgOverlayPlayModule,
     VgBufferingModule,
     HttpClientModule,
+    MatTableModule,
+    MatSortModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

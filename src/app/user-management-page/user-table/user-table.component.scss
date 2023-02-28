@@ -1,0 +1,14 @@
+[mat-row] [mat-cell] {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+
+[mat-row]:hover [mat-cell] {
+  transition: ease-in 300ms;
+  border-color: currentColor;
+}
+
+.highlight {
+  background-color: rgba(0, 0, 0, 0.1);
+}

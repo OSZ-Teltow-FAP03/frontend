@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Bestätigen</h1>
+<div mat-dialog-content>
+  <p *ngIf="dialogData.delete">
+    Soll die Person "{{ dialogData.data.name }} {{ dialogData.data.lastname }}"
+    mit dem Username "{{ dialogData.data.username }}" wirklich gelöscht werden ?
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="dialogRef.close()">
+    Nein
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="dialogRef.close(dialogData.data)">
+    Ja
+  </button>
+</div>

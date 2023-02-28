@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
-import { User } from 'src/app/shared/interfaces/user';
+import { RegisterUser } from 'src/app/shared/interfaces/user';
 import { matchValidator } from 'src/app/shared/validators/match-validator';
 
 @Component({
@@ -11,7 +11,7 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
 })
 export class RegisterComponent {
   @Output() back = new EventEmitter<string>();
-  @Output() register = new EventEmitter<User>();
+  @Output() register = new EventEmitter<RegisterUser>();
 
   constructor(private readonly fb: FormBuilder) {}
 

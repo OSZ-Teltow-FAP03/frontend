@@ -1,0 +1,59 @@
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+  *ngIf="dataSourceInit$ | async"
+  matSort
+  (matSortChange)="sortData($event)">
+  <!-- ID Column -->
+  <ng-container matColumnDef="ID">
+    <th mat-sort-header="ID" mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.ID }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Name, Vorname">
+    <th mat-header-cell *matHeaderCellDef>Name, Vorname</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.lastname }}, {{ element.name }}
+    </td>
+  </ng-container>
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="Username">
+    <th mat-sort-header="username" mat-header-cell *matHeaderCellDef>
+      Username
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="Email">
+    <th mat-sort-header="email" mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+  </ng-container>
+
+  <!-- Role Column -->
+  <ng-container matColumnDef="Rolle">
+    <th mat-sort-header="role" mat-header-cell *matHeaderCellDef>Rolle</th>
+    <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="selectRow(row)"
+    [class.highlight]="selectedRow.has(row.ID)"></tr>
+</table>
+
+<mat-paginator
+  *ngIf="dataSource.page$ | async as page"
+  color="accent"
+  [length]="page.totalElements"
+  [pageSize]="page.size"
+  [pageIndex]="page.number"
+  [pageSizeOptions]="[5, 10, 25, 50]"
+  [showFirstLastButtons]="true"
+  (page)="dataSource.fetch($event)">
+</mat-paginator>

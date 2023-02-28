@@ -4,7 +4,6 @@ import { Query } from 'src/app/shared/interfaces/query';
 import { PaginationDataSource } from 'src/app/shared/pagination/pagination-data-source';
 import { BehaviorSubject } from 'rxjs';
 import { Sort } from '@angular/material/sort';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-user-table',

@@ -14,17 +14,17 @@ export class FileService {
   filesApi = `${this.api}/files`;
 
   streamFile(id: number) {
-    this.http.get(`${this.filesApi}/stream`, {
+    return this.http.get(`${this.filesApi}/stream`, {
       params: { FileID: id },
     });
   }
-  downlaodFile(id: number) {
-    this.http.get(`${this.filesApi}/download`, {
+  downloadFile(id: number) {
+    return this.http.get(`${this.filesApi}/download`, {
       params: { FileID: id },
     });
   }
-  uplaodFile(file: any, id: number) {
-    this.http.post(`${this.filesApi}/upload`, {
+  uploadFile(file: File | null, id: number) {
+    return this.http.post(`${this.filesApi}/upload`, {
       params: { FilmID: id, file: file },
     });
   }

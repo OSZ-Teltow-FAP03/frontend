@@ -25,6 +25,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+// Angular Material Extensions
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 // Localization imports
 import { registerLocaleData } from '@angular/common';
@@ -46,6 +52,13 @@ import { NotFoundComponent } from './error/not-found/not-found.component';
 import { GenericErrorComponent } from './error/generic-error/generic-error.component';
 import { VideoPlayerPageComponent } from './video-player-page/video-player-page.component';
 import { VideoPlayerComponent } from './video-player-page/video-player/video-player.component';
+import { UserManagementPageComponent } from './user-management-page/user-management-page.component';
+import { UserTableComponent } from './user-management-page/user-table/user-table.component';
+import { UserActionsComponent } from './user-management-page/user-actions/user-actions.component';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-change-dialog.component';
+import { VideoFormsComponent } from './forms-page/video-forms/video-forms.component';
+import { FormsPageComponent } from './forms-page/forms-page.component';
 
 import { environment as env } from './../environments/environment';
 import { API_TOKEN } from './shared/api-token';
@@ -56,11 +69,7 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
-import { UserManagementPageComponent } from './user-management-page/user-management-page.component';
-import { UserTableComponent } from './user-management-page/user-table/user-table.component';
-import { UserActionsComponent } from './user-management-page/user-actions/user-actions.component';
-import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
-import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-change-dialog.component';
+import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +91,9 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     UserActionsComponent,
     ConfirmationDialogComponent,
     RoleChangeDialogComponent,
+    VideoFormsComponent,
+    FormsPageComponent,
+    ChangePasswordPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +120,11 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     MatSortModule,
     MatSelectModule,
     MatTooltipModule,
+    DragDropModule,
+    MatCheckboxModule,
+    NgxMatFileInputModule,
+    MatPasswordStrengthModule,
+    MatPasswordStrengthModule.forRoot(),
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

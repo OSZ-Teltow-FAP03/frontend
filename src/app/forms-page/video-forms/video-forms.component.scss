@@ -1,0 +1,39 @@
+.file-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  button {
+    margin: 1rem;
+  }
+}
+
+.form {
+  width: 100%;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  mat-form-field {
+    margin: 0.5rem;
+  }
+
+  .flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    mat-form-field {
+      width: 100%;
+      &:first-of-type {
+        margin-right: 10px;
+      }
+    }
+    .file-input {
+      width: 240px;
+    }
+  }
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+}

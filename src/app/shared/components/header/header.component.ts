@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,18 @@ export class HeaderComponent {
   @Input() showSearch = true;
   @Output() search = new EventEmitter<string>();
 
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService
+  ) {}
 
   nfb = this.fb.nonNullable;
 
   searchForm = this.nfb.group({
     search: this.nfb.control<string>(''),
   });
+
+  logout() {
+    this.authService.logout().subscribe();
+  }
 }

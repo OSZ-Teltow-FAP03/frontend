@@ -18,7 +18,7 @@ export class MovieService {
 
   movieList$ = new Subject<Array<Movie>>();
 
-  get movieToPlay(): Observable<Movie | null> {
+  get movieToEdit(): Observable<Movie | null> {
     return this.storedMovie.asObservable();
   }
 
@@ -47,33 +47,45 @@ export class MovieService {
       return of(
         filmList.filter(
           x =>
-            x.Auflösung.includes(query) ||
-            x.Autor.includes(query) ||
-            x.Bemerkung.includes(query) ||
-            x.Bewertungen.includes(query) ||
-            x.Bildformat.includes(query) ||
-            x.Bildfrequenz.includes(query) ||
-            x.Dauer.includes(query) ||
+            x.Auflösung?.includes(query) ||
+            x.Autor?.includes(query) ||
+            x.Bemerkung?.includes(query) ||
+            x.Bewertungen?.includes(query) ||
+            x.Bildformat?.includes(query) ||
+            x.Bildfrequenz?.includes(query) ||
+            x.Dauer?.includes(query) ||
             x.Erzaehlsatz.includes(query) ||
-            x.Farbtiefe.includes(query) ||
+            x.Farbtiefe?.includes(query) ||
             x.Filmtitel.includes(query) ||
             x.ID.toString().includes(query) ||
-            x.Klasse.includes(query) ||
-            x.Lehrjahr.includes(query) ||
+            x.Klasse?.includes(query) ||
+            x.Lehrjahr?.includes(query) ||
             x.Mitwirkende.includes(query) ||
             x.Programmtyp.includes(query) ||
             x.Status.includes(query) ||
-            x.Timecode_Anfang.includes(query) ||
-            x.Timecode_Ende.includes(query) ||
-            x.Tonformat.includes(query) ||
-            x.Tonspurbelegung.includes(query) ||
-            x.Videocodec.includes(query) ||
-            x.Videocontainer.includes(query)
+            x.Timecode_Anfang?.includes(query) ||
+            x.Timecode_Ende?.includes(query) ||
+            x.Tonformat?.includes(query) ||
+            x.Tonspurbelegung?.includes(query) ||
+            x.Videocodec?.includes(query) ||
+            x.Videocontainer?.includes(query)
         )
       );
     }
     return this.http.get<Movie>(`${this.filmsApi}/get`, {
       params: { filmQuery: query },
+    });
+  }
+  getMovieByID(id: number): Observable<ApiMovieData> {
+    if (this.prod === false) {
+      const entry = filmList.find(x => x.ID === id);
+      if (entry !== undefined) {
+        return of(entry);
+      }
+      return of();
+    }
+    return this.http.get<ApiMovieData>(`${this.filmsApi}/get`, {
+      params: { FilmID: id },
     });
   }
   createMovie(movie: Partial<Movie>) {
@@ -213,7 +225,7 @@ export class MovieService {
       params: { FilmID: id },
     });
   }
-  storeMovieToPlay(movie: Movie) {
+  storeMovieToEdit(movie: Movie) {
     this.storedMovie.next(movie);
   }
   page(request: PageRequest, query: Query): Observable<Page<ApiMovieData>> {
@@ -229,62 +241,64 @@ export class MovieService {
               movie.Filmtitel.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Klasse.toLowerCase().includes(query.search.toLowerCase()) ||
-              movie.Dauer.toLowerCase().includes(query.search.toLowerCase()) ||
-              movie.Tonformat.toLowerCase().includes(
+              movie.Klasse?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Bildformat.toLowerCase().includes(
+              movie.Dauer?.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Tonformat?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Bildfrequenz.toLowerCase().includes(
+              movie.Bildformat?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Farbtiefe.toLowerCase().includes(
+              movie.Bildfrequenz?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Videocontainer.toLowerCase().includes(
+              movie.Farbtiefe?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Tonspurbelegung.toLowerCase().includes(
+              movie.Videocontainer?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Timecode_Anfang.toLowerCase().includes(
+              movie.Tonspurbelegung?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Timecode_Ende.toLowerCase().includes(
+              movie.Timecode_Anfang?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Videocodec.toLowerCase().includes(
+              movie.Timecode_Ende?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Auflösung.toLowerCase().includes(
+              movie.Videocodec?.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Auflösung?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
               movie.Erstellungsdatum.toString()
                 .toLowerCase()
                 .includes(query.search.toLowerCase()) ||
-              movie.Autor.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Autor?.toLowerCase().includes(query.search.toLowerCase()) ||
               movie.Programmtyp.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
               movie.Erzaehlsatz.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Bemerkung.toLowerCase().includes(
+              movie.Bemerkung?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
               movie.Mitwirkende.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
-              movie.Bewertungen.toLowerCase().includes(
+              movie.Bewertungen?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
               movie.Upload.toString()
                 .toLowerCase()
                 .includes(query.search.toLowerCase()) ||
               movie.Status.toLowerCase().includes(query.search.toLowerCase()) ||
-              movie.Lehrjahr.toLowerCase().includes(
+              movie.Lehrjahr?.toLowerCase().includes(
                 query.search.toLowerCase()
               ) ||
               movie.Stichworte.toLowerCase().includes(

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, tap, Observable } from 'rxjs';
-import { testUsers } from 'src/app/test-data/users';
 import { API_TOKEN } from '../api-token';
 import { Login } from '../interfaces/auth';
 import { RegisterUser, User } from '../interfaces/user';

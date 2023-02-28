@@ -22,4 +22,6 @@ export class LoginComponent {
     username: this.nfb.control<string>('', [Validators.required]),
     password: this.nfb.control<string>('', [Validators.required]),
   });
+
+  //TODO: Fehlerausgabe bei nicht möglich einloggen
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'users', component: UserManagementPageComponent },
   { path: '**', component: NotFoundComponent },
 ];
-
+//TODO: Authguard
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

@@ -31,7 +31,7 @@ export class MovieListComponent {
     });
     breakpointObserver.observe([Breakpoints.XLarge]).subscribe(result => {
       if (result.matches) {
-        this.columns = 6;
+        this.columns = 5;
       }
     });
   }

@@ -27,8 +27,21 @@ export class AuthService {
 
   login(login: Login) {
     if (this.prod === false) {
-      this.loggedInBool.next(true);
-      return of(true);
+      if (
+        login.username.toLowerCase() === 'test' &&
+        login.password.toLowerCase() === 'test'
+      ) {
+        this.loggedInUser = {
+          ID: 1,
+          name: 'Jochen',
+          lastname: 'Schweizer',
+          email: 'email@email.com',
+          username: login.username,
+        };
+        this.loggedInBool.next(true);
+        return of(true);
+      }
+      return of(false);
     }
     return this.http.post<boolean>(`${this.authApi}/login`, login).pipe(
       tap(bool => {

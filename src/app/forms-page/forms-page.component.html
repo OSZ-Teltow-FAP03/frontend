@@ -1,0 +1,6 @@
+<app-header title="Film Erstellen" [showSearch]="false"></app-header>
+<div class="content">
+  <app-video-forms
+    (submitForm)="createMovie($event)"
+    [movie]="movie$ | async"></app-video-forms>
+</div>

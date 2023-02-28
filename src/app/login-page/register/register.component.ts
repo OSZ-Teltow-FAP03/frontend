@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
 import { RegisterUser } from 'src/app/shared/interfaces/user';
@@ -8,6 +14,8 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
   @Output() back = new EventEmitter<string>();
@@ -25,6 +33,7 @@ export class RegisterComponent {
     lastName: this.nfb.control<string>('', [Validators.required]),
     password: this.nfb.control<string>('', [
       Validators.required,
+      Validators.minLength(6),
       matchValidator('confirmPassword', true),
     ]),
     confirmPassword: this.nfb.control<string>('', [

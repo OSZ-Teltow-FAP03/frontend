@@ -11,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/file-input": "^9.0.0",
+    "@angular-material-extensions/password-strength": "^12.1.0",
     "@angular/animations": "^15.0.0",
     "@angular/cdk": "^15.1.3",
     "@angular/common": "^15.0.0",

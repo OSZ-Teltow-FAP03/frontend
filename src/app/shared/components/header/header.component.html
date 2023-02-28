@@ -4,8 +4,10 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/archive">Archiv</button>
-    <button mat-menu-item routerLink="/add-movie">Film hinzufügen</button>
+    <button mat-menu-item routerLink="/new-video">Film hinzufügen</button>
     <button mat-menu-item routerLink="/users">Userverwaltung</button>
+    <button mat-menu-item routerLink="/change-password">Passwort ändern</button>
+    <button mat-menu-item (click)="logout()">Ausloggen</button>
   </mat-menu>
 
   <span>{{ title }}</span>

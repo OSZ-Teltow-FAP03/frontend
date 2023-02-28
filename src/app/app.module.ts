@@ -28,6 +28,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+// Angular Material Extensions
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+
 // Localization imports
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -53,7 +57,8 @@ import { UserTableComponent } from './user-management-page/user-table/user-table
 import { UserActionsComponent } from './user-management-page/user-actions/user-actions.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-change-dialog.component';
-import { VideoFormsComponent } from './video-forms/video-forms.component';
+import { VideoFormsComponent } from './forms-page/video-forms/video-forms.component';
+import { FormsPageComponent } from './forms-page/forms-page.component';
 
 import { environment as env } from './../environments/environment';
 import { API_TOKEN } from './shared/api-token';
@@ -64,6 +69,7 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +92,8 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     ConfirmationDialogComponent,
     RoleChangeDialogComponent,
     VideoFormsComponent,
+    FormsPageComponent,
+    ChangePasswordPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +122,9 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
     MatTooltipModule,
     DragDropModule,
     MatCheckboxModule,
+    NgxMatFileInputModule,
+    MatPasswordStrengthModule,
+    MatPasswordStrengthModule.forRoot(),
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

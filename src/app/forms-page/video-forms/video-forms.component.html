@@ -1,0 +1,353 @@
+<div class="file-actions">
+  <button
+    [color]="!addVideoFile ? 'primary' : 'accent'"
+    mat-raised-button
+    (click)="toggleVideoFile()">
+    {{ !addVideoFile ? 'Filmupload hinzufügen' : 'Filmupload entfernen' }}
+  </button>
+  <button
+    [color]="!addSoundFile ? 'primary' : 'accent'"
+    mat-raised-button
+    (click)="toggleSoundFile()">
+    {{ !addSoundFile ? 'Tonupload hinzufügen' : 'Tonupload entfernen' }}
+  </button>
+</div>
+<form class="form" [formGroup]="videoForm" (ngSubmit)="submit()">
+  <div class="flex-wrapper" *ngIf="addVideoFile">
+    <mat-form-field appearance="outline" class="file-input">
+      <ngx-mat-file-input
+        formControlName="file"
+        [multiple]="false"
+        [accept]="'video/*'">
+      </ngx-mat-file-input>
+      <mat-hint>Filmdatei Auswählen*</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="file-input">
+      <ngx-mat-file-input
+        formControlName="image"
+        [multiple]="false"
+        [accept]="'image/*'">
+      </ngx-mat-file-input>
+      <mat-hint>Vorschaubild Auswählen*</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="flex-wrapper" *ngIf="addSoundFile">
+    <mat-form-field appearance="outline" class="file-input">
+      <ngx-mat-file-input
+        formControlName="sound"
+        [multiple]="false"
+        [accept]="'audio/*'">
+      </ngx-mat-file-input>
+      <mat-hint>Tondatei Auswählen*</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field hintLabel="Max 50 Zeichen" class="full-width">
+    <mat-label>Filmtitel</mat-label>
+    <input
+      matInput
+      #title
+      name="title"
+      type="text"
+      placeholder="Filmtitel"
+      formControlName="title" />
+    <mat-hint align="end">{{ title.value.length }}/50</mat-hint>
+    <mat-error *ngIf="videoForm.controls.title.invalid">{{
+      getErrorMessage(videoForm.controls.title)
+    }}</mat-error>
+  </mat-form-field>
+  <div class="flex-wrapper">
+    <mat-form-field class="half-width">
+      <mat-label>Tonformat</mat-label>
+      <mat-select name="tonformat" formControlName="soundformat">
+        <mat-option value="mono">Mono</mat-option>
+        <mat-option value="stereo">Stereo</mat-option>
+        <mat-option value="dolby">Dolby</mat-option>
+        <mat-option value="dts">DTS</mat-option>
+        <mat-option value="mpeg">MPEG</mat-option>
+        <mat-option value="mp3">MP3</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="half-width">
+      <mat-label>Bildformat</mat-label>
+      <mat-select name="bildformat" formControlName="imageformat">
+        <mat-option value="4:3">4:3</mat-option>
+        <mat-option value="16:9">16:9</mat-option>
+        <mat-option value="21:9">21:9</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="flex-wrapper">
+    <mat-form-field class="example-full-width" hintLabel="Max 10 Zeichen">
+      <mat-label>Bildfrequenz</mat-label>
+      <input
+        matInput
+        #framerate
+        type="text"
+        name="bildfrequenz"
+        placeholder="Bildfrequenz"
+        formControlName="framerate" />
+      <mat-hint align="end">{{ framerate.value.length }}/10</mat-hint>
+      <mat-error *ngIf="videoForm.controls.framerate.invalid">{{
+        getErrorMessage(videoForm.controls.framerate)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" hintLabel="Max 10 Zeichen">
+      <mat-label>Farbtiefe</mat-label>
+      <input
+        matInput
+        #colourdepth
+        type="text"
+        name="farbtiefe"
+        placeholder="Farbtiefe"
+        formControlName="colourdepth" />
+      <mat-hint align="end">{{ colourdepth.value.length }}/10</mat-hint>
+      <mat-error *ngIf="videoForm.controls.colourdepth.invalid">{{
+        getErrorMessage(videoForm.controls.colourdepth)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Videocontainer</mat-label>
+      <mat-select name="videocontainer" formControlName="videocontainer">
+        <mat-option value="mp4">MP4</mat-option>
+        <mat-option value="mov">MOV</mat-option>
+        <mat-option value="wmv">WMV</mat-option>
+        <mat-option value="avi">AVI</mat-option>
+        <mat-option value="avchd">AVCHD</mat-option>
+        <mat-option value="flv">FLV</mat-option>
+        <mat-option value="f4v">F4V</mat-option>
+        <mat-option value="swf">SWF</mat-option>
+        <mat-option value="mkv">MKV</mat-option>
+        <mat-option value="webm">WEBM</mat-option>
+        <mat-option value="html5">HTML5</mat-option>
+        <mat-option value="quicktime">Quicktime</mat-option>
+        <mat-option value="asf">ASF</mat-option>
+        <mat-option value="mpeg">MPEG</mat-option>
+        <mat-option value="mxf">MXF</mat-option>
+        <mat-option value="dv">DV</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Tonspurbelegung</mat-label>
+      <input
+        matInput
+        type="text"
+        name="tonspurbelegung"
+        placeholder="Tonspurbelegung"
+        formControlName="soundtracing" />
+    </mat-form-field>
+  </div>
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Dauer</mat-label>
+      <input
+        matInput
+        type="time"
+        name="dauer"
+        placeholder="Dauer"
+        formControlName="duration" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Videocodec</mat-label>
+      <mat-select name="videocodec" formControlName="videocodec">
+        <mat-option value="h.264">H.264</mat-option>
+        <mat-option value="h.265">H.265</mat-option>
+        <mat-option value="ffmpeg">FFmpeg</mat-option>
+        <mat-option value="apple">Apple</mat-option>
+        <mat-option value="pro res">Pro Res</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Auflösung</mat-label>
+      <mat-select name="aufloesung" formControlName="resolution">
+        <mat-option value="hd720">HD720</mat-option>
+        <mat-option value="hd1080">HD1080</mat-option>
+        <mat-option value="uhd4k">UHD4K</mat-option>
+        <mat-option value="uhd8k">UHD8K</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Erscheinungsdatum</mat-label>
+      <input
+        matInput
+        type="date"
+        name="erscheinungsdatum"
+        placeholder="Erscheinungsdatum"
+        formControlName="releasedate" />
+      <mat-error *ngIf="videoForm.controls.releasedate.invalid">{{
+        getErrorMessage(videoForm.controls.releasedate)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Autor</mat-label>
+      <input
+        matInput
+        type="text"
+        name="autor"
+        placeholder="Autor"
+        formControlName="author" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Programmtyp</mat-label>
+      <mat-select name="programmtyp" formControlName="programtype">
+        <mat-option value="unterricht">Unterricht</mat-option>
+        <mat-option value="wettbewerb">Wettbewerb</mat-option>
+        <mat-option value="abschlusssendung">Abschlusssendung</mat-option>
+        <mat-option value="projekt vt">Projekt VT</mat-option>
+      </mat-select>
+      <mat-error *ngIf="videoForm.controls.programtype.invalid">{{
+        getErrorMessage(videoForm.controls.programtype)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field hintLabel="Max 1000 Zeichen">
+    <mat-label>Erzählsatz</mat-label>
+    <textarea
+      matInput
+      #narrativesentence
+      type="text"
+      name="erzaehlsatz"
+      placeholder="Erzählsatz"
+      formControlName="narrativesentence"></textarea>
+    <mat-hint align="end">{{ narrativesentence.value.length }}/1000</mat-hint>
+    <mat-error *ngIf="videoForm.controls.narrativesentence.invalid">{{
+      getErrorMessage(videoForm.controls.narrativesentence)
+    }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" hintLabel="Max 100 Zeichen">
+    <mat-label>Bemerkungen</mat-label>
+    <textarea
+      matInput
+      #comment
+      type="text"
+      name="bemerkungen"
+      placeholder="Bemerkungen"
+      formControlName="comment"></textarea>
+    <mat-hint align="end">{{ comment.value.length }}/100</mat-hint>
+  </mat-form-field>
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Erstellungsdatum</mat-label>
+      <input
+        matInput
+        type="date"
+        name="erstellungsdatum"
+        placeholder="Erstellungsdatum"
+        formControlName="creationdate" />
+      <mat-error *ngIf="videoForm.controls.creationdate.invalid">{{
+        getErrorMessage(videoForm.controls.creationdate)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Klasse</mat-label>
+      <input
+        matInput
+        type="text"
+        name="klasse"
+        placeholder="Klasse"
+        formControlName="class" />
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Mitwirkende</mat-label>
+    <input
+      matInput
+      type="text"
+      name="mitwirkende"
+      placeholder="Mitwirkende"
+      formControlName="contributors" />
+    <mat-hint>Mitwirkende mit Komma trennen</mat-hint>
+    <mat-error *ngIf="videoForm.controls.contributors.invalid">{{
+      getErrorMessage(videoForm.controls.contributors)
+    }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="Max 200 Zeichen">
+    <mat-label>Bewertungen</mat-label>
+    <textarea
+      matInput
+      #rating
+      type="text"
+      maxlength="200"
+      placeholder="Bewertungen"
+      formControlName="rating"></textarea>
+    <mat-hint align="end">{{ rating.value.length }}/200</mat-hint>
+  </mat-form-field>
+  <div class="flex-wrapper">
+    <mat-form-field>
+      <mat-label>Lehrjahr</mat-label>
+      <mat-select formControlName="apprenticeshipyear">
+        <mat-option value="1">1. Lehrjahr</mat-option>
+        <mat-option value="2">2. Lehrjahr</mat-option>
+        <mat-option value="3">3. Lehrjahr</mat-option>
+      </mat-select>
+      <mat-error *ngIf="videoForm.controls.apprenticeshipyear.invalid">{{
+        getErrorMessage(videoForm.controls.apprenticeshipyear)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="in ausbildung">in Ausbildung</mat-option>
+        <mat-option value="ausbildung beendet">Ausbildung beendet</mat-option>
+      </mat-select>
+      <mat-error *ngIf="videoForm.controls.status.invalid">{{
+        getErrorMessage(videoForm.controls.status)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field hintLabel="*Erforderliche Felder">
+    <mat-label>Stichworte</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Stichworte"
+      formControlName="keywords" />
+    <mat-error *ngIf="videoForm.controls.keywords.invalid">{{
+      getErrorMessage(videoForm.controls.keywords)
+    }}</mat-error>
+  </mat-form-field>
+
+  <section>
+    <mat-checkbox formControlName="testpiece" value="true"
+      >Prüfstück</mat-checkbox
+    >
+  </section>
+
+  <section>
+    <div class="action-buttons">
+      <button
+        type="button"
+        routerLink="/archive"
+        mat-raised-button
+        color="warn">
+        Abbrechen
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="videoForm.invalid">
+        Speichern
+      </button>
+    </div>
+  </section>
+</form>

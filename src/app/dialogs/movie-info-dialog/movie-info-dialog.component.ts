@@ -40,13 +40,14 @@ export class MovieInfoDialogComponent {
     });
   }
   edit() {
-    console.log('edit');
+    this.dialogRef.close();
+    this.movieService.storeMovieToEdit(this.data);
+    this.router.navigate(['/edit-video', this.data.ID]);
   }
   download() {
     console.log('download');
   }
   playMovie() {
-    this.movieService.storeMovieToPlay(this.data);
     this.dialogRef.close();
     this.router.navigate(['player']);
     console.log('play movie');

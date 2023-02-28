@@ -104,6 +104,10 @@ import { RoleChangeDialogComponent } from './dialogs/role-change-dialog/role-cha
     VgOverlayPlayModule,
     VgBufferingModule,
     HttpClientModule,
+    MatTableModule,
+    MatSortModule,
+    MatSelectModule,
+    MatTooltipModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },

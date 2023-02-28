@@ -32,10 +32,10 @@ export class AuthService {
         login.password.toLowerCase() === 'test'
       ) {
         this.loggedInUser = {
+          ID: 1,
           name: 'Jochen',
           lastname: 'Schweizer',
           email: 'email@email.com',
-          password: login.password,
           username: login.username,
         };
         this.loggedInBool.next(true);

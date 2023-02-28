@@ -3,9 +3,14 @@
   <app-movie-list
     [movieList]="sanitizedMovieList$ | async"
     (openMovie)="openMovie($event)"></app-movie-list>
-  <app-pagination
-    [pageSize]="(pageSize$ | async) ?? 10"
-    [pageIndex]="(pageIndex$ | async) ?? 0"
-    [length]="(movieList$ | async)?.length ?? 0"
-    (paginator)="paginatorChange($event)"></app-pagination>
+  <mat-paginator
+    *ngIf="dataSource.page$ | async as page"
+    color="accent"
+    [length]="page.totalElements"
+    [pageSize]="page.size"
+    [pageIndex]="page.number"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    [showFirstLastButtons]="true"
+    (page)="dataSource.fetch($event)">
+  </mat-paginator>
 </div>

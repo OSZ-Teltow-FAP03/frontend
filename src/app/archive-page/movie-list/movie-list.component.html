@@ -1,36 +1,38 @@
-<mat-grid-list [cols]="columns" rowHeight="1:1.2">
-  <ng-container *ngIf="movieList !== null && movieList.length > 0; else noData">
-    <mat-grid-tile *ngFor="let entry of movieList">
-      <mat-card (click)="openMovie.emit(entry)">
-        <mat-card-header>
-          <h2>
-            {{ entry.Filmtitel }}
-          </h2>
-        </mat-card-header>
-        <mat-card-content>
-          <!-- TODO: bessere Lösung für verschieden Große Bilder -->
-          <img
-            [src]="entry.Vorschaubild"
-            alt="bild"
-            *ngIf="entry.Vorschaubild; else noImage" />
-          <div class="info">
-            <div>
-              <span class="info-title">Dauer</span>
-              <span>{{ entry.Dauer }}</span>
-            </div>
-            <div>
-              <span class="info-title">Klasse</span>
-              <span> {{ entry.Klasse }}</span>
-            </div>
-            <div>
-              <span class="info-title">Erscheinungsjahr</span>
-              <span> {{ entry.Erscheinungsdatum.getFullYear() }}</span>
-            </div>
+<mat-grid-list
+  [cols]="columns"
+  rowHeight="1:1.2"
+  *ngIf="movieList !== null && movieList.length > 0; else noData">
+  <mat-grid-tile *ngFor="let entry of movieList">
+    <mat-card (click)="openMovie.emit(entry)">
+      <mat-card-header>
+        <h2>
+          {{ entry.Filmtitel }}
+        </h2>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- TODO: bessere Lösung für verschieden Große Bilder -->
+        <img
+          title="Vorschaubild"
+          [src]="entry.Vorschaubild"
+          [alt]="'Vorschaubild für den Film' + ' ' + entry.Filmtitel"
+          *ngIf="entry.Vorschaubild; else noImage" />
+        <div class="info">
+          <div>
+            <span class="info-title">Dauer</span>
+            <span>{{ entry.Dauer }}</span>
           </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </ng-container>
+          <div>
+            <span class="info-title">Klasse</span>
+            <span> {{ entry.Klasse }}</span>
+          </div>
+          <div>
+            <span class="info-title">Erscheinungsjahr</span>
+            <span> {{ entry.Erscheinungsdatum.getFullYear() }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
 </mat-grid-list>
 
 <ng-template #noImage>
@@ -40,7 +42,9 @@
 </ng-template>
 
 <ng-template #noData>
-  <mat-grid-tile [colspan]="columns">
-    Es sind keine Daten hierzu vorhanden.
-  </mat-grid-tile>
+  <mat-grid-list [cols]="columns" rowHeight="1:1.2">
+    <mat-grid-tile [colspan]="columns" [rowspan]="1">
+      <h1>Es sind keine Daten hierzu vorhanden.</h1>
+    </mat-grid-tile>
+  </mat-grid-list>
 </ng-template>

@@ -1,9 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
-import { Movie } from '../interfaces/movie';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { API_TOKEN } from '../api-token';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PROD_TOKEN } from '../production';
+import { filmList } from 'src/app/test-data/films';
+import { ApiMovieData, Movie } from '../interfaces/movie';
+import { Page, PageRequest } from '../pagination/pagination';
+import { Query } from '../interfaces/query';
+import { Observable, of, take, map, Subject, BehaviorSubject } from 'rxjs';
+import { compare } from '../functions/compare';
 import { File } from '../interfaces/file';
 
 @Injectable({
@@ -12,8 +16,14 @@ import { File } from '../interfaces/file';
 export class MovieService {
   storedMovie = new BehaviorSubject<Movie | null>(null);
 
+  movieList$ = new Subject<Array<Movie>>();
+
   get movieToPlay(): Observable<Movie | null> {
     return this.storedMovie.asObservable();
+  }
+
+  get movieList(): Observable<Array<Movie>> {
+    return this.movieList$.asObservable();
   }
 
   filmsApi = `${this.api}/films`;
@@ -22,12 +32,46 @@ export class MovieService {
     @Inject(API_TOKEN) private readonly api: string,
     @Inject(PROD_TOKEN) private readonly prod: boolean,
     private readonly http: HttpClient
-  ) {}
+  ) {
+    this.getAllMovies().subscribe(val => this.movieList$.next(val));
+  }
 
   getAllMovies() {
-    this.http.get<Array<Movie>>(`${this.filmsApi}/get`);
+    if (this.prod === false) {
+      return of(filmList);
+    }
+    return this.http.get<Array<ApiMovieData>>(`${this.filmsApi}/get`);
   }
   searchMovies(query: string) {
+    if (this.prod === false) {
+      return of(
+        filmList.filter(
+          x =>
+            x.Auflösung.includes(query) ||
+            x.Autor.includes(query) ||
+            x.Bemerkung.includes(query) ||
+            x.Bewertungen.includes(query) ||
+            x.Bildformat.includes(query) ||
+            x.Bildfrequenz.includes(query) ||
+            x.Dauer.includes(query) ||
+            x.Erzaehlsatz.includes(query) ||
+            x.Farbtiefe.includes(query) ||
+            x.Filmtitel.includes(query) ||
+            x.ID.toString().includes(query) ||
+            x.Klasse.includes(query) ||
+            x.Lehrjahr.includes(query) ||
+            x.Mitwirkende.includes(query) ||
+            x.Programmtyp.includes(query) ||
+            x.Status.includes(query) ||
+            x.Timecode_Anfang.includes(query) ||
+            x.Timecode_Ende.includes(query) ||
+            x.Tonformat.includes(query) ||
+            x.Tonspurbelegung.includes(query) ||
+            x.Videocodec.includes(query) ||
+            x.Videocontainer.includes(query)
+        )
+      );
+    }
     return this.http.get<Movie>(`${this.filmsApi}/get`, {
       params: { filmQuery: query },
     });
@@ -165,16 +209,118 @@ export class MovieService {
     });
   }
   listFilesOfFilm(id: number) {
-    if (this.prod === false) {
-      return of<Array<File>>([
-        { type: 'Movie', path: 'https://vjs.zencdn.net/v/oceans.mp4' },
-      ]);
-    }
     return this.http.get<Array<File>>(`${this.filmsApi}/listFiles`, {
       params: { FilmID: id },
     });
   }
   storeMovieToPlay(movie: Movie) {
     this.storedMovie.next(movie);
+  }
+  page(request: PageRequest, query: Query): Observable<Page<ApiMovieData>> {
+    return this.getAllMovies().pipe(
+      take(1),
+      map(movies => {
+        if (query.search.length > 0) {
+          movies = movies.filter(
+            movie =>
+              movie.ID.toString()
+                .toLowerCase()
+                .includes(query.search.toLowerCase()) ||
+              movie.Filmtitel.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Klasse.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Dauer.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Tonformat.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Bildformat.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Bildfrequenz.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Farbtiefe.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Videocontainer.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Tonspurbelegung.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Timecode_Anfang.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Timecode_Ende.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Videocodec.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Auflösung.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Erstellungsdatum.toString()
+                .toLowerCase()
+                .includes(query.search.toLowerCase()) ||
+              movie.Autor.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Programmtyp.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Erzaehlsatz.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Bemerkung.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Mitwirkende.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Bewertungen.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Upload.toString()
+                .toLowerCase()
+                .includes(query.search.toLowerCase()) ||
+              movie.Status.toLowerCase().includes(query.search.toLowerCase()) ||
+              movie.Lehrjahr.toLowerCase().includes(
+                query.search.toLowerCase()
+              ) ||
+              movie.Stichworte.toLowerCase().includes(
+                query.search.toLowerCase()
+              )
+          );
+        }
+        return movies;
+      }),
+      map(movies => {
+        const sort = request.sort;
+        return movies.sort((a, b) => {
+          const isAsc = sort.direction === 'asc';
+          switch (sort.active) {
+            case 'ID':
+              return compare(a.ID, b.ID, isAsc);
+            default:
+              return 0;
+          }
+        });
+      }),
+      map(movies => {
+        return {
+          content: movies,
+          number: request.page,
+          size: request.size,
+          totalElements: movies.length,
+        };
+      }),
+      map(page => {
+        page.content = page.content.slice(
+          request.page * request.size,
+          request.page * request.size + request.size
+        );
+        return page;
+      })
+    );
   }
 }

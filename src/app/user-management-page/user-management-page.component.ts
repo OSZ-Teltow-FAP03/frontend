@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { User, UserQuery } from '../shared/interfaces/user';
+import { ConfirmationDialogComponent } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import { RoleChangeDialogComponent } from '../dialogs/role-change-dialog/role-change-dialog.component';
+import { User } from '../shared/interfaces/user';
+import { Query } from '../shared/interfaces/query';
 import { PaginationDataSource } from '../shared/pagination/pagination-data-source';
 import { UserService } from '../shared/services/user.service';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-management-page',
@@ -10,12 +15,15 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./user-management-page.component.scss'],
 })
 export class UserManagementPageComponent {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    public dialog: MatDialog
+  ) {}
 
   initialSort: Sort = { active: 'ID', direction: 'asc' };
-  initalQuery: UserQuery = { search: '' };
+  initalQuery: Query = { search: '' };
 
-  dataSource = new PaginationDataSource<User, UserQuery>(
+  dataSource = new PaginationDataSource<User, Query>(
     (request, query) => this.userService.page(request, query),
     this.initialSort,
     this.initalQuery
@@ -37,12 +45,44 @@ export class UserManagementPageComponent {
   }
 
   updateRole(user: User) {
-    //TODO: open Dialog
-    this.userService.updateUserRole(user.ID, user.role).subscribe();
+    this.dialog
+      .open(RoleChangeDialogComponent, {
+        data: user,
+        enterAnimationDuration: '1000ms',
+        exitAnimationDuration: '500ms',
+        maxWidth: '480px',
+        width: '100%',
+        disableClose: true,
+      })
+      .afterClosed()
+      .pipe(
+        filter(x => x !== undefined),
+        switchMap((user: User) =>
+          this.userService.updateUserRole(user.ID, user.role)
+        )
+      )
+      .subscribe(); //success handling
   }
 
   deleteUser(user: User) {
-    //TODO: open confirmation Dialog
-    this.userService.deletUser(user.ID).subscribe();
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: { data: user, delete: true },
+        enterAnimationDuration: '1000ms',
+        exitAnimationDuration: '500ms',
+        maxWidth: '480px',
+        width: '100%',
+        disableClose: true,
+      })
+      .afterClosed()
+      .pipe(
+        filter(x => x !== undefined),
+        switchMap((user: User) => this.userService.deletUser(user.ID))
+      )
+      .subscribe(x => {
+        if (x) {
+          console.log('gelöscht');
+        }
+      });
   }
 }

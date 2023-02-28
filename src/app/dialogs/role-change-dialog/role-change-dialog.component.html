@@ -1,0 +1,32 @@
+<form
+  [formGroup]="rolechangeForm"
+  (ngSubmit)="(rolechangeForm.controls.role.value)">
+  <h1 mat-dialog-title>Rolle ändern</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="select" appearance="fill">
+      <mat-label>Rollen Auswahl</mat-label>
+      <mat-select formControlName="role" [value]="user.role">
+        <mat-option [value]="undefined">keine Rolle</mat-option>
+        <mat-option *ngFor="let role of roles" value="role">{{
+          role.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      type="button"
+      mat-raised-button
+      color="warn"
+      (click)="dialogRef.close()">
+      Abbrechen
+    </button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="rolechangeForm.invalid">
+      Speichern
+    </button>
+  </div>
+</form>

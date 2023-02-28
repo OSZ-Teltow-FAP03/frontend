@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { User, UserQuery } from 'src/app/shared/interfaces/user';
+import { User } from 'src/app/shared/interfaces/user';
+import { Query } from 'src/app/shared/interfaces/query';
 import { PaginationDataSource } from 'src/app/shared/pagination/pagination-data-source';
 import { BehaviorSubject } from 'rxjs';
 import { Sort } from '@angular/material/sort';
@@ -15,13 +16,13 @@ export class UserTableComponent {
 
   dataSourceInit$ = new BehaviorSubject<boolean>(false);
 
-  _dataSource!: PaginationDataSource<User, UserQuery>;
+  _dataSource!: PaginationDataSource<User, Query>;
 
-  @Input() set dataSource(value: PaginationDataSource<User, UserQuery>) {
+  @Input() set dataSource(value: PaginationDataSource<User, Query>) {
     this._dataSource = value;
     this.dataSourceInit$.next(true);
   }
-  get dataSource(): PaginationDataSource<User, UserQuery> {
+  get dataSource(): PaginationDataSource<User, Query> {
     return this._dataSource;
   }
 
@@ -40,10 +41,6 @@ export class UserTableComponent {
 
   sortData(data: Sort) {
     this.sort.emit(data);
-  }
-
-  pageChange(event: PageEvent) {
-    console.log(event);
   }
 
   selectRow(row: User) {

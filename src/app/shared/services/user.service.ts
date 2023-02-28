@@ -2,20 +2,26 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { API_TOKEN } from '../api-token';
 import { Page, PageRequest } from '../pagination/pagination';
-import { User, UserQuery } from '../interfaces/user';
+import { User } from '../interfaces/user';
 import { PROD_TOKEN } from '../production';
-import { Observable, of, take, map } from 'rxjs';
+import { Observable, of, take, map, Subject } from 'rxjs';
 import { testUsers } from 'src/app/test-data/users';
+import { Query } from '../interfaces/query';
+import { compare } from '../functions/compare';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  users$ = new Subject<Array<User>>();
+
   constructor(
     @Inject(API_TOKEN) private readonly api: string,
     @Inject(PROD_TOKEN) private readonly prod: boolean,
     private readonly http: HttpClient
-  ) {}
+  ) {
+    this.getAllUsers().subscribe(val => this.users$.next(val));
+  }
 
   userApi = `${this.api}/users`;
 
@@ -24,6 +30,10 @@ export class UserService {
       return of(testUsers);
     }
     return this.http.get<Array<User>>(`${this.userApi}/list`);
+  }
+
+  refresh() {
+    this.getAllUsers().subscribe(val => this.users$.next(val));
   }
 
   updateUserRole(id: number, role: string | undefined): Observable<User> {
@@ -78,7 +88,7 @@ export class UserService {
     });
   }
 
-  page(request: PageRequest, query: UserQuery): Observable<Page<User>> {
+  page(request: PageRequest, query: Query): Observable<Page<User>> {
     return this.getAllUsers().pipe(
       take(1),
       map(users => {
@@ -107,14 +117,14 @@ export class UserService {
           const isAsc = sort.direction === 'asc';
           switch (sort.active) {
             case 'ID':
-              return this.compare(a.ID, b.ID, isAsc);
+              return compare(a.ID, b.ID, isAsc);
             case 'email':
-              return this.compare(a.email, b.email, isAsc);
+              return compare(a.email, b.email, isAsc);
             case 'username':
-              return this.compare(a.username, b.username, isAsc);
+              return compare(a.username, b.username, isAsc);
             case 'role':
               if (typeof a.role === 'string' && typeof b.role === 'string') {
-                return this.compare(a.role, b.role, isAsc);
+                return compare(a.role, b.role, isAsc);
               }
               return 0;
             default:
@@ -138,9 +148,5 @@ export class UserService {
         return page;
       })
     );
-  }
-
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +16,6 @@ export class HeaderComponent {
   nfb = this.fb.nonNullable;
 
   searchForm = this.nfb.group({
-    search: this.nfb.control<string>('', [Validators.required]),
+    search: this.nfb.control<string>(''),
   });
 }

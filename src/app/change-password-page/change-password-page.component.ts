@@ -18,6 +18,10 @@ export class ChangePasswordPageComponent {
   changePasswordForm = this.nfb.group({
     password: this.nfb.control<string>('', [
       Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+      ),
       matchValidator('confirmPassword', true),
     ]),
     confirmPassword: this.nfb.control<string>('', [

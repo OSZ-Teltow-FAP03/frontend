@@ -33,7 +33,10 @@ export class RegisterComponent {
     lastName: this.nfb.control<string>('', [Validators.required]),
     password: this.nfb.control<string>('', [
       Validators.required,
-      Validators.minLength(6),
+      Validators.minLength(8),
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+      ),
       matchValidator('confirmPassword', true),
     ]),
     confirmPassword: this.nfb.control<string>('', [

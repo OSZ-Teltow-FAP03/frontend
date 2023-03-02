@@ -70,6 +70,7 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
+import { SECRET_TOKEN } from './shared/secret-key';
 
 @NgModule({
   declarations: [
@@ -131,6 +132,7 @@ import { ChangePasswordPageComponent } from './change-password-page/change-passw
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: API_TOKEN, useValue: env.apiURL },
     { provide: PROD_TOKEN, useValue: env.production },
+    { provide: SECRET_TOKEN, useValue: env.key },
   ],
   bootstrap: [AppComponent],
 })

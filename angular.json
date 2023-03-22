@@ -36,7 +36,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/crypto.js"
             ]
           },
           "configurations": {

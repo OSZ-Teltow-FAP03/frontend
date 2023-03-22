@@ -5,8 +5,7 @@ export function encrypt(
   text: string | object | boolean,
   key: string
 ): EncryptedData | false {
-  let string;
-  console.log(typeof text);
+  let string: string;
   if (typeof text == 'object') {
     string = JSON.stringify(text);
   } else if (typeof text == 'string') {
@@ -16,17 +15,17 @@ export function encrypt(
   } else {
     return false;
   }
-  const rand = randomBytes(16);
-  const iv = CryptoJS.enc.Hex.parse(rand);
+  const iv = randomBytes(16);
+  const parsed_iv = CryptoJS.enc.Hex.parse(iv);
   const parsedKey = CryptoJS.SHA256(key);
   const encrypted = CryptoJS.AES.encrypt(string, parsedKey, {
-    iv: iv,
+    iv: parsed_iv,
     mode: CryptoJS.mode.CTR,
+    format: CryptoJS.format.Hex,
   });
-  console.log(encrypted.ciphertext.toString());
   return {
     data: encrypted.toString(),
-    iv: rand,
+    iv: iv,
   };
 }
 
@@ -43,7 +42,6 @@ function randomBytes(length: number) {
 
 export function decrypt(encrypted: string | EncryptedData, key: string) {
   let json: EncryptedData;
-  console.log(typeof encrypted);
   if (typeof encrypted == 'object') {
     json = encrypted;
   } else if (typeof encrypted == 'string') {
@@ -53,10 +51,13 @@ export function decrypt(encrypted: string | EncryptedData, key: string) {
   }
   const iv = CryptoJS.enc.Hex.parse(json.iv);
   const parsedKey = CryptoJS.SHA256(key);
-  const decrypted = CryptoJS.AES.decrypt(json.data, parsedKey, {
-    iv: iv,
-    mode: CryptoJS.mode.CTR,
-  });
-  console.log(decrypted);
+  const decrypted = CryptoJS.AES.decrypt(
+    CryptoJS.format.Hex.parse(json.data),
+    parsedKey,
+    {
+      iv: iv,
+      mode: CryptoJS.mode.CTR,
+    }
+  );
   return decrypted.toString(CryptoJS.enc.Utf8);
 }

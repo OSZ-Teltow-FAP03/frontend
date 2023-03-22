@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
+import { decrypt, encrypt } from './shared/functions/crypto';
 import { EncryptedData } from './shared/interfaces/encrypted-data';
-
-declare function encrypt(text: string, key: string): EncryptedData | boolean;
-declare function decrypt(encrypted: string, key: string): string | boolean;
 
 @Component({
   selector: 'app-root',

@@ -3,9 +3,11 @@ import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, tap, Observable } from 'rxjs';
 import { API_TOKEN } from '../api-token';
+import { encrypt } from '../functions/crypto';
 import { Login } from '../interfaces/auth';
 import { RegisterUser, User } from '../interfaces/user';
 import { PROD_TOKEN } from '../production';
+import { SECRET_TOKEN } from '../secret-key';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,7 @@ export class AuthService {
     private readonly http: HttpClient,
     @Inject(API_TOKEN) private readonly api: string,
     @Inject(PROD_TOKEN) private readonly prod: boolean,
+    @Inject(SECRET_TOKEN) private readonly key:string
     private readonly router: Router
   ) {}
 
@@ -25,23 +28,6 @@ export class AuthService {
   loggedInBool = new BehaviorSubject(false);
 
   login(login: Login) {
-    if (this.prod === false) {
-      if (
-        login.username.toLowerCase() === 'test' &&
-        login.password.toLowerCase() === 'test'
-      ) {
-        this.loggedInUser = {
-          ID: 1,
-          name: 'Jochen',
-          lastname: 'Schweizer',
-          email: 'email@email.com',
-          username: login.username,
-        };
-        this.loggedInBool.next(true);
-        return of(true);
-      }
-      return of(false);
-    }
     return this.http.post<boolean>(`${this.authApi}/login`, login).pipe(
       tap(bool => {
         this.loggedInBool.next(bool);
@@ -49,28 +35,15 @@ export class AuthService {
     );
   }
   register(user: RegisterUser): Observable<User> {
-    if (this.prod === false) {
-      return of({
-        ID: 12,
-        name: user.name,
-        password: user.password,
-        lastname: user.lastname,
-        email: user.email,
-        username: user.username,
-      });
-    }
-    return this.http.post<User>(`${this.authApi}/register`, user);
+    return this.http.post<User>(`${this.authApi}/register`, {
+      name: encrypt(user.name, this.key),
+      lastname: encrypt(user.lastname, this.key),
+      username: encrypt(user.username, this.key),
+      email: encrypt(user.email, this.key),
+      password: encrypt(user.password, this.key),
+    });
   }
   logout() {
-    if (this.prod === false) {
-      return of(true).pipe(
-        tap(() => {
-          console.log('User ausgeloggt');
-          this.router.navigate(['/login']);
-          this.loggedInBool.next(false);
-        })
-      );
-    }
     return this.http.get<boolean>(`${this.authApi}/logout`).pipe(
       tap(() => {
         this.loggedInBool.next(false);
@@ -79,18 +52,10 @@ export class AuthService {
     );
   }
   passwordReset(password: string) {
-    if (this.prod === false) {
-      console.log('reset password');
-      return of(true);
-    }
     return this.http.post<boolean>(`${this.authApi}/reset`, password);
   }
 
   sendResetEmail(email: string) {
-    if (this.prod === false) {
-      console.log('Email zum Passwort zurücksetzten geschickt.');
-      return of(true);
-    }
     return this.http.post<boolean>(`${this.authApi}/send-email`, email);
   }
 }

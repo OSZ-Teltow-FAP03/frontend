@@ -18,8 +18,8 @@
     </div>
     <div class="movie-info">
       <h1>{{ data.Filmtitel }}</h1>
-      <p class="row">
-        <span>Beschreibung: </span><span>{{ data.Erzaehlsatz }}</span>
+      <p class="row" [matTooltip]="data['Erzählsatz']">
+        <span>Beschreibung: </span><span>{{ data['Erzählsatz'] }}</span>
       </p>
       <p class="row">
         <span>Erscheinungsdatum: </span
@@ -28,13 +28,13 @@
       <p class="row">
         <span>Autor: </span><span>{{ data.Autor }}</span>
       </p>
-      <p class="row">
+      <p class="row" [matTooltip]="data.Mitwirkende">
         <span>Mitwirkende: </span><span>{{ data.Mitwirkende }}</span>
       </p>
       <p class="row">
         <span>Klasse: </span><span>{{ data.Klasse }}</span>
       </p>
-      <p class="row">
+      <p class="row" [matTooltip]="data.Stichworte">
         <span>Stichworte: </span><span>{{ data.Stichworte }}</span>
       </p>
     </div>
@@ -43,8 +43,12 @@
     </div>
   </div>
   <div>
-    <button type="button" (click)="edit()" mat-raised-button color="primary">
-      Editieren
+    <button
+      type="button"
+      (click)="moreInfo()"
+      mat-raised-button
+      color="primary">
+      Mehr Infos anzeigen
     </button>
     <!-- <button
       type="button"
@@ -70,6 +74,9 @@
         Sound abspielen
       </button>
     </ng-container>
+    <button type="button" (click)="edit()" mat-raised-button color="primary">
+      Editieren
+    </button>
   </div>
 </div>
 

@@ -37,7 +37,6 @@ export class UserManagementPageComponent {
 
   rowChange(row: Map<number, { array: User; displayText: string }>) {
     this.selectedRow = new Map(row);
-    console.log(this.selectedRow);
   }
 
   search(string: string) {
@@ -79,10 +78,6 @@ export class UserManagementPageComponent {
         filter(x => x !== undefined),
         switchMap((user: User) => this.userService.deletUser(user.ID))
       )
-      .subscribe(x => {
-        if (x) {
-          console.log('gelöscht');
-        }
-      });
+      .subscribe();
   }
 }

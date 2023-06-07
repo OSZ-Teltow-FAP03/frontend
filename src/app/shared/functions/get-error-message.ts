@@ -16,7 +16,6 @@ export function getErrorMessage(control: FormControl) {
     return 'Diese Email existiert nicht im System. Schaue noch einmal nach ob du die richtige Email eingegeben hast.';
   }
   if (control.hasError('maxlength')) {
-    console.log(control);
     return `Du bist ${
       control.getError('maxlength').actualLength -
       control.getError('maxlength').requiredLength

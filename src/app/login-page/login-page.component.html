@@ -1,14 +1,19 @@
 <div class="content" [ngSwitch]="page">
   <div *ngSwitchCase="'Login'" class="login">
-    <app-login (login)="login($event)" (changePage)="page = $event"></app-login>
+    <app-login
+      [loading]="loading$ | async"
+      (login)="login($event)"
+      (changePage)="page = $event"></app-login>
   </div>
   <div *ngSwitchCase="'Register'" class="register">
     <app-register
+      [loading]="loading$ | async"
       (back)="page = $event"
       (register)="register($event)"></app-register>
   </div>
   <div *ngSwitchCase="'Password-Reset'" class="reset">
     <app-send-password-reset
+      [loading]="loading$ | async"
       (back)="page = $event"
       (sendMail)="sendEmail($event)"></app-send-password-reset>
   </div>

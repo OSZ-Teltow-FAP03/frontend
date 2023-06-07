@@ -11,6 +11,7 @@ export class SendPasswordResetComponent {
   @Output() sendMail = new EventEmitter<string>();
   @Output() back = new EventEmitter<string>();
   @Input() email = '';
+  @Input() loading: boolean | null = false;
 
   constructor(private readonly fb: FormBuilder) {}
 

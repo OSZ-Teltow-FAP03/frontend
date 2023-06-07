@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
-  ApiMovieData,
   Auflösung,
   BasicMovieData,
   Bildformat,
@@ -14,7 +13,7 @@ import {
   Videocontainer,
 } from 'src/app/shared/interfaces/movie';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
-import { Subject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-forms',
@@ -24,119 +23,150 @@ import { Subject, Observable } from 'rxjs';
 export class VideoFormsComponent {
   @Output() submitForm = new EventEmitter<{
     movieData: Partial<BasicMovieData>;
-    movieFile: File | null;
-    soundFile: File | null;
+    movieFile: File | Array<File> | null;
+    soundFile: File | Array<File> | null;
     previewImage: File | null;
   }>();
-  @Output() addVideo = new EventEmitter<File | null>();
-  @Output() addSound = new EventEmitter<File | null>();
+  @Output() addVideo = new EventEmitter<File | Array<File> | null>();
+  @Output() addSound = new EventEmitter<File | Array<File> | null>();
   @Output() addPreviewImage = new EventEmitter<File | null>();
 
-  _movie!: ApiMovieData | null;
-  get movie(): ApiMovieData | null {
+  _movie!: Movie | null;
+  get movie(): Movie | null {
     return this._movie;
   }
-  @Input() set movie(value: ApiMovieData | null) {
+  @Input() set movie(value: Movie | null) {
     this._movie = value;
     if (value !== null) {
       this.setFormValue(value);
     }
   }
 
+  @Input() disabled: boolean | null = false;
+
   addVideoFile = false;
   addSoundFile = false;
 
-  constructor(private readonly fb: FormBuilder) {
-    console.log(this.movie);
-  }
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly router: Router
+  ) {}
 
   getErrorMessage = getErrorMessage;
 
   nfb = this.fb.nonNullable;
 
-  setFormValue(x: ApiMovieData) {
-    console.log(x.Erscheinungsdatum);
-    console.log(x.Erscheinungsdatum.getMonth());
+  setFormValue(x: Movie) {
+    const noValue = '';
 
-    this.videoForm.controls.title.setValue(x.Filmtitel);
-    this.videoForm.controls.soundformat.setValue(x.Tonformat ?? '');
-    this.videoForm.controls.imageformat.setValue(x.Bildformat ?? '');
-    this.videoForm.controls.framerate.setValue(x.Bildfrequenz ?? '');
-    this.videoForm.controls.colourdepth.setValue(x.Farbtiefe ?? '');
-    this.videoForm.controls.videocontainer.setValue(x.Videocontainer ?? '');
-    this.videoForm.controls.soundtracing.setValue(x.Tonspurbelegung ?? '');
-    this.videoForm.controls.duration.setValue(x.Dauer ?? '');
-    this.videoForm.controls.videocodec.setValue(x.Videocodec ?? '');
-    this.videoForm.controls.resolution.setValue(x.Auflösung ?? '');
-    this.videoForm.controls.releasedate.setValue(
-      x.Erscheinungsdatum.getFullYear() +
+    this.videoForm.patchValue({
+      title: x.Filmtitel,
+      soundformat: x.Tonformat ?? noValue,
+      imageformat: x.Bildformat ?? noValue,
+      framerate: x.Bildfrequenz ?? noValue,
+      colourdepth: x.Farbtiefe ?? noValue,
+      videocontainer: x.Videocontainer ?? noValue,
+      soundtracing: x.Tonspurbelegung ?? noValue,
+      duration: x.Dauer?.slice(0, 5) ?? noValue,
+      videocodec: x.Videocodec ?? noValue,
+      resolution: x.Auflösung ?? noValue,
+      releasedate:
+        new Date(x.Erscheinungsdatum).getFullYear() +
         '-' +
-        (x.Erscheinungsdatum.getMonth() + 1).toString().padStart(2, '0') +
+        (new Date(x.Erscheinungsdatum).getMonth() + 1)
+          .toString()
+          .padStart(2, '0') +
         '-' +
-        x.Erscheinungsdatum.getUTCDate().toString().padStart(2, '0')
-    );
-    this.videoForm.controls.author.setValue(x.Autor ?? '');
-    this.videoForm.controls.programtype.setValue(x.Programmtyp ?? '');
-    this.videoForm.controls.narrativesentence.setValue(x.Erzaehlsatz);
-    this.videoForm.controls.comment.setValue(x.Bemerkung ?? '');
-    this.videoForm.controls.creationdate.setValue(
-      x.Erstellungsdatum.getFullYear() +
+        new Date(x.Erscheinungsdatum).getUTCDate().toString().padStart(2, '0'),
+      author: x.Autor ?? noValue,
+      programtype: x.Programmtyp ?? noValue,
+      narrativesentence: x.Erzählsatz,
+      comment: x.Bemerkung ?? noValue,
+      creationdate:
+        new Date(x.Erstellungsdatum).getFullYear() +
         '-' +
-        (x.Erscheinungsdatum.getMonth() + 1).toString().padStart(2, '0') +
+        (new Date(x.Erscheinungsdatum).getMonth() + 1)
+          .toString()
+          .padStart(2, '0') +
         '-' +
-        x.Erstellungsdatum.getUTCDate().toString().padStart(2, '0')
-    );
-    this.videoForm.controls.class.setValue(x.Klasse ?? '');
+        new Date(x.Erstellungsdatum).getUTCDate().toString().padStart(2, '0'),
+      testpiece: x.Prüfstück,
+      status: x.Status,
+      apprenticeshipyear: x.Lehrjahr ?? noValue,
+      class: x.Klasse ?? noValue,
+      contributors: x.Mitwirkende,
+      keywords: x.Stichworte,
+      rating: x.Bewertungen ?? noValue,
+    });
 
-    this.videoForm.controls.contributors.setValue(x.Mitwirkende);
-    this.videoForm.controls.rating.setValue(x.Bewertungen ?? '');
-    this.videoForm.controls.apprenticeshipyear.setValue(x.Lehrjahr ?? '');
-    this.videoForm.controls.status.setValue(x.Status);
-    this.videoForm.controls.keywords.setValue(x.Stichworte);
-    this.videoForm.controls.testpiece.setValue(x.Prüfstück);
+    if (this.disabled) {
+      this.videoForm.controls.class.disable();
+      this.videoForm.controls.contributors.disable();
+      this.videoForm.controls.rating.disable();
+      this.videoForm.controls.apprenticeshipyear.disable();
+      this.videoForm.controls.status.disable();
+      this.videoForm.controls.keywords.disable();
+      this.videoForm.controls.testpiece.disable();
+      this.videoForm.controls.title.disable();
+      this.videoForm.controls.soundformat.disable();
+      this.videoForm.controls.imageformat.disable();
+      this.videoForm.controls.framerate.disable();
+      this.videoForm.controls.colourdepth.disable();
+      this.videoForm.controls.videocontainer.disable();
+      this.videoForm.controls.soundtracing.disable();
+      this.videoForm.controls.duration.disable();
+      this.videoForm.controls.videocodec.disable();
+      this.videoForm.controls.resolution.disable();
+      this.videoForm.controls.releasedate.disable();
+      this.videoForm.controls.author.disable();
+      this.videoForm.controls.programtype.disable();
+      this.videoForm.controls.narrativesentence.disable();
+      this.videoForm.controls.comment.disable();
+      this.videoForm.controls.creationdate.disable();
+      this.videoForm.controls.class.disable();
+      this.videoForm.controls.contributors.disable();
+      this.videoForm.controls.rating.disable();
+      this.videoForm.controls.apprenticeshipyear.disable();
+      this.videoForm.controls.status.disable();
+      this.videoForm.controls.keywords.disable();
+      this.videoForm.controls.testpiece.disable();
+    }
   }
 
   videoForm = this.nfb.group({
-    file: [null],
-    sound: [null],
-    image: [null],
-    title: [
-      this.movie?.Filmtitel ?? '',
-      [Validators.required, Validators.maxLength(50)],
-    ],
-    soundformat: [this.movie?.Tonformat ?? ''],
-    imageformat: [this.movie?.Bildformat ?? ''],
-    framerate: [this.movie?.Bildfrequenz ?? '', Validators.maxLength(10)],
-    colourdepth: [this.movie?.Farbtiefe ?? '', Validators.maxLength(10)],
-    videocontainer: [this.movie?.Videocontainer ?? ''],
-    soundtracing: [this.movie?.Tonspurbelegung ?? ''],
-    duration: [this.movie?.Dauer ?? ''],
-    videocodec: [this.movie?.Videocodec ?? ''],
-    resolution: [this.movie?.Auflösung ?? ''],
-    releasedate: [this.movie?.Erscheinungsdatum ?? '', Validators.required],
-    author: [this.movie?.Autor ?? ''],
-    programtype: [this.movie?.Programmtyp ?? '', Validators.required],
-    narrativesentence: [
-      this.movie?.Erzaehlsatz ?? '',
-      [Validators.required, Validators.maxLength(1000)],
-    ],
-    comment: [this.movie?.Bemerkung ?? '', Validators.maxLength(100)],
-    creationdate: [this.movie?.Erstellungsdatum ?? '', Validators.required],
-    class: [this.movie?.Klasse ?? ''],
-    contributors: [this.movie?.Mitwirkende ?? '', Validators.required],
-    rating: [this.movie?.Bewertungen ?? '', Validators.maxLength(200)],
-    apprenticeshipyear: [this.movie?.Lehrjahr ?? '', Validators.required],
-    status: [this.movie?.Status ?? '', Validators.required],
-    keywords: [this.movie?.Stichworte ?? '', Validators.required],
-    testpiece: [this.movie?.Prüfstück ?? false],
+    file: [''],
+    sound: [''],
+    image: [''],
+    title: ['', [Validators.required, Validators.maxLength(50)]],
+    soundformat: [''],
+    imageformat: [''],
+    framerate: ['', Validators.maxLength(10)],
+    colourdepth: ['', Validators.maxLength(10)],
+    videocontainer: [''],
+    soundtracing: [''],
+    duration: [''],
+    videocodec: [''],
+    resolution: [''],
+    releasedate: ['', Validators.required],
+    author: ['', [Validators.required]],
+    programtype: ['', Validators.required],
+    narrativesentence: ['', [Validators.required, Validators.maxLength(1000)]],
+    comment: ['', Validators.maxLength(100)],
+    creationdate: ['', Validators.required],
+    class: [''],
+    contributors: ['', Validators.required],
+    rating: ['', Validators.maxLength(200)],
+    apprenticeshipyear: ['', Validators.required],
+    status: ['', Validators.required],
+    keywords: ['', Validators.required],
+    testpiece: [false],
   });
 
   submit() {
-    console.log(this.videoForm.value);
     const movie: Partial<BasicMovieData> = {
-      Erscheinungsdatum: new Date(this.videoForm.controls.releasedate.value),
-      Erstellungsdatum: new Date(this.videoForm.controls.creationdate.value),
-      Erzaehlsatz: this.videoForm.controls.narrativesentence.value,
+      Erscheinungsdatum: this.videoForm.controls.releasedate.value,
+      Erstellungsdatum: this.videoForm.controls.creationdate.value,
+      Erzählsatz: this.videoForm.controls.narrativesentence.value,
       Filmtitel: this.videoForm.controls.title.value,
       Mitwirkende: this.videoForm.controls.contributors.value,
       Programmtyp: this.videoForm.controls.programtype.value as Programmtyp,
@@ -187,11 +217,19 @@ export class VideoFormsComponent {
       movie.Lehrjahr = this.videoForm.controls.apprenticeshipyear
         .value as Lehrjahr;
     }
+
     this.submitForm.emit({
       movieData: movie,
-      movieFile: this.videoForm.controls.file.value,
-      soundFile: this.videoForm.controls.sound.value,
-      previewImage: this.videoForm.controls.image.value,
+      movieFile: this.videoForm.controls.file.value as unknown as
+        | File
+        | Array<File>
+        | null,
+      soundFile: this.videoForm.controls.sound.value as unknown as
+        | File
+        | Array<File>
+        | null,
+      previewImage: this.videoForm.controls.image
+        .value as unknown as File | null,
     });
   }
 

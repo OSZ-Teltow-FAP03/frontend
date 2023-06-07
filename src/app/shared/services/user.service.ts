@@ -5,7 +5,6 @@ import { Page, PageRequest } from '../pagination/pagination';
 import { User } from '../interfaces/user';
 import { PROD_TOKEN } from '../production';
 import { Observable, of, take, map, Subject } from 'rxjs';
-import { testUsers } from 'src/app/test-data/users';
 import { Query } from '../interfaces/query';
 import { compare } from '../functions/compare';
 
@@ -26,10 +25,9 @@ export class UserService {
   userApi = `${this.api}/users`;
 
   getAllUsers() {
-    if (this.prod === false) {
-      return of(testUsers);
-    }
-    return this.http.get<Array<User>>(`${this.userApi}/list`);
+    return this.http.get<Array<User>>(`${this.userApi}/list`, {
+      withCredentials: true,
+    });
   }
 
   refresh() {
@@ -37,20 +35,6 @@ export class UserService {
   }
 
   updateUserRole(id: number, role: string | undefined): Observable<User> {
-    if (this.prod === false) {
-      const user = testUsers.find(x => x.ID === id);
-      if (user !== undefined) {
-        user.role = role;
-        return of(user);
-      }
-      return of({
-        ID: 1,
-        name: 'Thorsten',
-        email: 'Thorsten@gmail.com',
-        lastname: 'Meier',
-        username: 'tmera',
-      });
-    }
     return this.http.patch<User>(`${this.userApi}/updateRole`, {
       UserID: id,
       role: role,
@@ -58,19 +42,6 @@ export class UserService {
   }
 
   getUserById(id: number) {
-    if (this.prod === false) {
-      const user = testUsers.find(x => x.ID === id);
-      if (user !== undefined) {
-        return of(user);
-      }
-      return of({
-        ID: 1,
-        name: 'Thorsten',
-        email: 'Thorsten@gmail.com',
-        lastname: 'Meier',
-        username: 'tmera',
-      });
-    }
     const params = new HttpParams();
     params.set('UserID', id);
 
@@ -80,9 +51,6 @@ export class UserService {
   }
 
   deletUser(id: number): Observable<boolean> {
-    if (this.prod === false) {
-      return of(true);
-    }
     return this.http.delete<boolean>(`${this.userApi}/delete`, {
       body: { UserID: id },
     });

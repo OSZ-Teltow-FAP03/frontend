@@ -41,21 +41,17 @@ export class MovieInfoDialogComponent {
   }
   edit() {
     this.dialogRef.close();
-    this.movieService.storeMovieToEdit(this.data);
     this.router.navigate(['/edit-video', this.data.ID]);
   }
-  download() {
-    console.log('download');
+
+  moreInfo() {
+    this.dialogRef.close();
+    this.router.navigate(['/more-info', this.data.ID]);
   }
+  download() {}
   playMovie() {
     this.dialogRef.close();
     this.router.navigate(['player']);
-    console.log('play movie');
   }
-  playSound() {
-    console.log('play sound');
-  }
-  moreInfo() {
-    console.log('more info');
-  }
+  playSound() {}
 }

@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 // Angular Material Imports
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -29,8 +30,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Angular Material Extensions
-import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 // Localization imports
 import { registerLocaleData } from '@angular/common';
@@ -71,6 +72,8 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
 import { SECRET_TOKEN } from './shared/secret-key';
+import { ApiInterceptor } from './shared/api.interceptor';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +98,7 @@ import { SECRET_TOKEN } from './shared/secret-key';
     VideoFormsComponent,
     FormsPageComponent,
     ChangePasswordPageComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,7 +127,7 @@ import { SECRET_TOKEN } from './shared/secret-key';
     MatTooltipModule,
     DragDropModule,
     MatCheckboxModule,
-    NgxMatFileInputModule,
+    MaterialFileInputModule,
     MatPasswordStrengthModule,
     MatPasswordStrengthModule.forRoot(),
   ],
@@ -133,6 +137,12 @@ import { SECRET_TOKEN } from './shared/secret-key';
     { provide: API_TOKEN, useValue: env.apiURL },
     { provide: PROD_TOKEN, useValue: env.production },
     { provide: SECRET_TOKEN, useValue: env.key },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+    { provide: CookieService },
   ],
   bootstrap: [AppComponent],
 })

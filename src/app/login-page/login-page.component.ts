@@ -2,8 +2,10 @@ import { Login } from '../shared/interfaces/auth';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { take, Observable } from 'rxjs';
 import { RegisterUser } from '../shared/interfaces/user';
+import { LoadingService } from '../shared/services/loading.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,10 +15,12 @@ import { RegisterUser } from '../shared/interfaces/user';
 })
 export class LoginPageComponent {
   page = 'Login' || 'Register' || 'Password-Reset';
-
+  loading$: Observable<boolean>;
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly loadingService: LoadingService,
+    private readonly cookie: CookieService
   ) {
     this.page = 'Login';
     this.authService.loggedInBool.pipe(take(1)).subscribe(bool => {
@@ -24,25 +28,27 @@ export class LoginPageComponent {
         this.router.navigate(['archive']);
       }
     });
+    this.loading$ = loadingService.loading$;
+
+    const sessionId = this.cookie.getAll();
+    if (sessionId !== undefined) {
+      this.cookie.delete('session_id');
+    }
   }
 
   login(data: Login) {
-    console.log(data);
     this.authService.login(data).subscribe({
-      next: bool => {
-        if (bool) {
+      next: user => {
+        if (user) {
           this.router.navigate(['archive']);
-        } else {
-          console.log('bla');
         }
       },
-    }); // TODO: success handling (notification)
+    });
   }
 
   register(data: RegisterUser) {
     this.authService.register(data).subscribe({
       next: user => {
-        console.log(user);
         this.page = 'Login';
       },
     }); // TODO: success handling (notification)

@@ -1,7 +1,7 @@
 <app-header title="Filmarchiv" (search)="search($event)"></app-header>
 <div class="content">
   <app-movie-list
-    [movieList]="sanitizedMovieList$ | async"
+    [movieList]="movieList$ | async"
     (openMovie)="openMovie($event)"></app-movie-list>
   <mat-paginator
     *ngIf="dataSource.page$ | async as page"
@@ -14,3 +14,5 @@
     (page)="dataSource.fetch($event)">
   </mat-paginator>
 </div>
+
+<!-- TODO: LOADING -->

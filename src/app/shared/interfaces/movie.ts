@@ -3,7 +3,7 @@ import { SafeUrl } from '@angular/platform-browser';
 export interface BasicMovieData {
   ID: number;
   Filmtitel: string;
-  Erscheinungsdatum: Date;
+  Erscheinungsdatum: string;
   Klasse?: string;
   Dauer?: string;
   Tonformat?: Tonformat;
@@ -16,14 +16,14 @@ export interface BasicMovieData {
   Timecode_Ende?: string;
   Videocodec?: Videocodec;
   Auflösung?: Auflösung;
-  Erstellungsdatum: Date;
+  Erstellungsdatum: string;
   Autor?: string;
   Programmtyp: Programmtyp;
-  Erzaehlsatz: string;
+  Erzählsatz: string;
   Bemerkung?: string;
   Mitwirkende: string;
   Bewertungen?: string;
-  Upload: Date;
+  Upload: string;
   Status: Status;
   Lehrjahr?: Lehrjahr;
   Stichworte: string;

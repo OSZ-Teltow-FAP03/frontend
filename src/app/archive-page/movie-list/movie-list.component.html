@@ -27,7 +27,7 @@
           </div>
           <div>
             <span class="info-title">Erscheinungsjahr</span>
-            <span> {{ entry.Erscheinungsdatum.getFullYear() }}</span>
+            <span> {{ toDate(entry.Erscheinungsdatum).getFullYear() }}</span>
           </div>
         </div>
       </mat-card-content>

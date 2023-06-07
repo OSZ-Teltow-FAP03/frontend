@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Output,
   ViewEncapsulation,
+  Input,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
@@ -20,6 +21,7 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
 export class RegisterComponent {
   @Output() back = new EventEmitter<string>();
   @Output() register = new EventEmitter<RegisterUser>();
+  @Input() loading: boolean | null = false;
 
   constructor(private readonly fb: FormBuilder) {}
 

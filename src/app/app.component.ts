@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { decrypt, encrypt } from './shared/functions/crypto';
-import { EncryptedData } from './shared/interfaces/encrypted-data';
+import { CookieService } from 'ngx-cookie-service';
+import { MovieService } from './shared/services/movie.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,11 @@ import { EncryptedData } from './shared/interfaces/encrypted-data';
 })
 export class AppComponent {
   title = 'frontend';
-  constructor() {
-    const test = encrypt('test', 'test');
-    console.log(test);
-    if (typeof test !== 'boolean') {
-      console.log(decrypt(test.data, 'test'));
-    }
-  }
+
+  constructor(
+    private readonly cookie: CookieService,
+    private readonly movieService: MovieService
+  ) {}
+
+  loading$ = this.movieService.loading.pipe(delay(3000));
 }

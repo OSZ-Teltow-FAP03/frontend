@@ -1,6 +1,6 @@
 import { FormBuilder, Validators } from '@angular/forms';
 import { Login } from '../../shared/interfaces/auth';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
 
 @Component({
@@ -11,6 +11,7 @@ import { getErrorMessage } from 'src/app/shared/functions/get-error-message';
 export class LoginComponent {
   @Output() login = new EventEmitter<Login>();
   @Output() changePage = new EventEmitter<string>();
+  @Input() loading: boolean | null = false;
 
   constructor(private readonly fb: FormBuilder) {}
 

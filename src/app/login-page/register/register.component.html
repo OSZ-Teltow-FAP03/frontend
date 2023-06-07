@@ -11,23 +11,35 @@
   ">
   <h1 class="title"><b>Neuen Account erstellen</b></h1>
   <mat-form-field appearance="fill">
-    <mat-label>Username</mat-label>
-    <input matInput placeholder="Username" formControlName="username" />
+    <mat-label #usernameLabel>Username</mat-label>
+    <input
+      matInput
+      aria-labelledby="usernameLabel"
+      placeholder="Username"
+      formControlName="username" />
     <mat-error *ngIf="registerForm.controls.username.invalid">{{
       getErrorMessage(registerForm.controls.username)
     }}</mat-error>
   </mat-form-field>
   <div class="name">
     <mat-form-field appearance="fill">
-      <mat-label>Vorname</mat-label>
-      <input matInput placeholder="Vorname" formControlName="foreName" />
+      <mat-label #nameLabel>Vorname</mat-label>
+      <input
+        matInput
+        aria-labelledby="nameLabel"
+        placeholder="Vorname"
+        formControlName="foreName" />
       <mat-error *ngIf="registerForm.controls.foreName.invalid">{{
         getErrorMessage(registerForm.controls.foreName)
       }}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Nachname</mat-label>
-      <input matInput placeholder="Nachname" formControlName="lastName" />
+      <mat-label #lastnameLabel>Nachname</mat-label>
+      <input
+        matInput
+        aria-labelledby="lastnameLabel"
+        placeholder="Nachname"
+        formControlName="lastName" />
       <mat-error *ngIf="registerForm.controls.lastName.invalid">{{
         getErrorMessage(registerForm.controls.lastName)
       }}</mat-error>
@@ -79,8 +91,13 @@
     }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input matInput placeholder="Email" type="email" formControlName="email" />
+    <mat-label #emailLabel>Email</mat-label>
+    <input
+      matInput
+      aria-labelledby="emailLabel"
+      placeholder="Email"
+      type="email"
+      formControlName="email" />
     <mat-error *ngIf="registerForm.controls.email.invalid">{{
       getErrorMessage(registerForm.controls.email)
     }}</mat-error>
@@ -90,13 +107,15 @@
       type="button"
       color="accent"
       mat-raised-button
+      [disabled]="loading"
       (click)="back.emit('Login')">
       Zurück
     </button>
     <button
       type="submit"
       color="primary"
-      [disabled]="!registerForm.valid"
+      [class.spinner]="loading"
+      [disabled]="registerForm.invalid || loading"
       mat-raised-button>
       Registrieren
     </button>

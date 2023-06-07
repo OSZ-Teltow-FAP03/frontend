@@ -35,4 +35,8 @@ export class MovieListComponent {
       }
     });
   }
+
+  toDate(string: string) {
+    return new Date(string);
+  }
 }

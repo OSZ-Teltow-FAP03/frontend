@@ -38,13 +38,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'more-info/:id',
+    component: FormsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'change-password',
     component: ChangePasswordPageComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: NotFoundComponent },
 ];
-//TODO: Authguard
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

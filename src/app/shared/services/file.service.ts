@@ -23,7 +23,7 @@ export class FileService {
       params: { FileID: id },
     });
   }
-  uploadFile(file: File | null, id: number) {
+  uploadFile(file: File | Array<File> | null, id: number) {
     return this.http.post(`${this.filesApi}/upload`, {
       params: { FilmID: id, file: file },
     });

@@ -12,7 +12,8 @@
     <input
       matInput
       placeholder="Email oder Username"
-      formControlName="username" />
+      formControlName="username"
+      autocomplete="username" />
     <mat-error *ngIf="loginForm.controls.username.invalid">{{
       getErrorMessage(loginForm.controls.username)
     }}</mat-error>
@@ -23,7 +24,8 @@
       matInput
       placeholder="Password"
       type="password"
-      formControlName="password" />
+      formControlName="password"
+      autocomplete="current-password" />
     <mat-error *ngIf="loginForm.controls.password.invalid">{{
       getErrorMessage(loginForm.controls.password)
     }}</mat-error>
@@ -33,6 +35,7 @@
       type="button"
       color="primary"
       mat-button
+      [disabled]="loading"
       (click)="changePage.emit('Password-Reset')">
       Passwort vergessen?
     </button>
@@ -42,7 +45,8 @@
       type="submit"
       color="primary"
       mat-raised-button
-      [disabled]="!loginForm.valid">
+      [class.spinner]="loading"
+      [disabled]="loginForm.invalid || loading">
       Login
     </button>
   </div>
@@ -52,6 +56,7 @@
       type="button"
       color="primary"
       mat-button
+      [disabled]="loading"
       (click)="changePage.emit('Register')">
       Dann erstellen Sie jetzt einen.
     </button>
